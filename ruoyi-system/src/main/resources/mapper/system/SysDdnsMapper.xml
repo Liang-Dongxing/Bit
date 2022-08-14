@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysDdnsMapper">
+
+    <resultMap type="SysDdns" id="SysDdnsResult">
+        <result property="ddnsId" column="ddns_id"/>
+        <result property="domain" column="domain"/>
+        <result property="hostRecord" column="host_record"/>
+        <result property="parseRecordType" column="parse_record_type"/>
+        <result property="accessId" column="access_id"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectSysDdnsVo">
+        select ddns_id,
+               domain,
+               host_record,
+               parse_record_type,
+               access_id,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from sys_ddns
+    </sql>
+
+    <select id="selectSysDdnsList" parameterType="SysDdns" resultMap="SysDdnsResult">
+        <include refid="selectSysDdnsVo"/>
+        <where>
+            <if test="domain != null  and domain != ''">and domain = #{domain}</if>
+            <if test="hostRecord != null  and hostRecord != ''">and host_record = #{hostRecord}</if>
+            <if test="parseRecordType != null  and parseRecordType != ''">and parse_record_type = #{parseRecordType}
+            </if>
+            <if test="accessId != null ">and access_id = #{accessId}</if>
+        </where>
+    </select>
+
+    <select id="selectSysDdnsByDdnsId" parameterType="Long" resultMap="SysDdnsResult">
+        <include refid="selectSysDdnsVo"/>
+        where ddns_id = #{ddnsId}
+    </select>
+
+    <insert id="insertSysDdns" parameterType="SysDdns" useGeneratedKeys="true" keyProperty="ddnsId">
+        insert into sys_ddns
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="domain != null and domain != ''">domain,</if>
+            <if test="hostRecord != null and hostRecord != ''">host_record,</if>
+            <if test="parseRecordType != null and parseRecordType != ''">parse_record_type,</if>
+            <if test="accessId != null">access_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="domain != null and domain != ''">#{domain},</if>
+            <if test="hostRecord != null and hostRecord != ''">#{hostRecord},</if>
+            <if test="parseRecordType != null and parseRecordType != ''">#{parseRecordType},</if>
+            <if test="accessId != null">#{accessId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateSysDdns" parameterType="SysDdns">
+        update sys_ddns
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="domain != null and domain != ''">domain = #{domain},</if>
+            <if test="hostRecord != null and hostRecord != ''">host_record = #{hostRecord},</if>
+            <if test="parseRecordType != null and parseRecordType != ''">parse_record_type = #{parseRecordType},</if>
+            <if test="accessId != null">access_id = #{accessId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where ddns_id = #{ddnsId}
+    </update>
+
+    <delete id="deleteSysDdnsByDdnsId" parameterType="Long">
+        delete
+        from sys_ddns
+        where ddns_id = #{ddnsId}
+    </delete>
+
+    <delete id="deleteSysDdnsByDdnsIds" parameterType="String">
+        delete from sys_ddns where ddns_id in
+        <foreach item="ddnsId" collection="array" open="(" separator="," close=")">
+            #{ddnsId}
+        </foreach>
+    </delete>
+</mapper>
