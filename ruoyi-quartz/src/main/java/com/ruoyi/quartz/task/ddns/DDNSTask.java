@@ -1,5 +1,7 @@
 package com.ruoyi.quartz.task.ddns;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONWriter;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.alidns.model.v20150109.DescribeDomainRecordsRequest;
@@ -32,11 +34,20 @@ public class DDNSTask {
     private ISysThirdAccessService iSysThirdAccessService;
 
     public void ryNoParams() {
-        List<SysDdns> sysDdns = iSysDdnsService.selectSysDdnsList(null);
-        for (SysDdns sysDdn : sysDdns) {
-            SysThirdAccess sysThirdAccess = iSysThirdAccessService.selectSysThirdAccessByAccessId(sysDdn.getAccessId());
-            getDdns(sysDdn, sysThirdAccess);
+        SysThirdAccess sysThirdAccess = new SysThirdAccess();
+        sysThirdAccess.setAccessKeyType("aliyun");
+        List<SysThirdAccess> sysThirdAccesses = iSysThirdAccessService.selectSysThirdAccessList(sysThirdAccess);
+        for (SysThirdAccess thirdAccess : sysThirdAccesses) {
+            SysDdns sysDdns = new SysDdns();
+            sysDdns.setAccessId(thirdAccess.getAccessId());
+            List<SysDdns> sysDdnsList = iSysDdnsService.selectSysDdnsList(sysDdns);
+            for (SysDdns sysDdn : sysDdnsList) {
+                SysThirdAccess sysThirdAccessTemp = iSysThirdAccessService.selectSysThirdAccessByAccessId(sysDdn.getAccessId());
+                getDdns(sysDdn, sysThirdAccessTemp);
+                iSysDdnsService.updateSysDdns(sysDdn);
+            }
         }
+
     }
 
     private void getDdns(SysDdns sysDdns, SysThirdAccess sysThirdAccess) {
@@ -55,18 +66,25 @@ public class DDNSTask {
         // 解析记录类型
         describeDomainRecordsRequest.setType(sysDdns.getParseRecordType());
         DescribeDomainRecordsResponse describeDomainRecordsResponse = ddns.describeDomainRecords(describeDomainRecordsRequest, client);
-        ddns.log_print("describeDomainRecords", describeDomainRecordsResponse);
-
         List<DescribeDomainRecordsResponse.Record> domainRecords = describeDomainRecordsResponse.getDomainRecords();
+        // 在测试ddns更新的时候发现有时候， 一级域名@有的时候更新会变成以域名.之前的字符串生成二级域名，需要重新更具二级域名查询进行二次修改。
+        if ("@".equals(sysDdns.getHostRecord()) && domainRecords.size() == 0) {
+            String[] split = sysDdns.getDomain().split("\\.");
+            describeDomainRecordsRequest.setRRKeyWord(split[0]);
+            describeDomainRecordsResponse = ddns.describeDomainRecords(describeDomainRecordsRequest, client);
+            domainRecords = describeDomainRecordsResponse.getDomainRecords();
+        }
+        log.info("describeDomainRecords");
+        log.info(JSON.toJSONString(describeDomainRecordsResponse, JSONWriter.Feature.PrettyFormat));
         for (DescribeDomainRecordsResponse.Record record : domainRecords) {
             // 当前主机公网IP
             String currentHostIP = ddns.getCurrentHostIP();
-            log.info("-------------------------------当前主机公网IP为：" + currentHostIP + "-------------------------------");
-            if (!currentHostIP.equals(record.getValue())) {
+            log.info("当前主机公网IP为：{}", currentHostIP);
+            if (!currentHostIP.equals(record.getValue()) || !record.getRR().equals(sysDdns.getHostRecord())) {
                 // 修改解析记录
                 UpdateDomainRecordRequest updateDomainRecordRequest = new UpdateDomainRecordRequest();
                 // 主机记录
-                updateDomainRecordRequest.setRR(record.getRR());
+                updateDomainRecordRequest.setRR(sysDdns.getHostRecord());
                 // 记录ID
                 updateDomainRecordRequest.setRecordId(record.getRecordId());
                 // 将主机记录值改为当前主机IP
@@ -74,7 +92,12 @@ public class DDNSTask {
                 // 解析记录类型
                 updateDomainRecordRequest.setType(sysDdns.getParseRecordType());
                 UpdateDomainRecordResponse updateDomainRecordResponse = ddns.updateDomainRecord(updateDomainRecordRequest, client);
-                ddns.log_print("updateDomainRecord", updateDomainRecordResponse);
+                log.info("updateDomainRecord");
+                log.info(JSON.toJSONString(updateDomainRecordResponse, JSONWriter.Feature.PrettyFormat));
+                sysDdns.setRecordTheValue(currentHostIP);
+                if ("@".equals(sysDdns.getHostRecord())) {
+                    getDdns(sysDdns, sysThirdAccess);
+                }
             }
         }
     }
