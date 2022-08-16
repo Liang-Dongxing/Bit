@@ -42,6 +42,12 @@ public class SysDdns extends BaseEntity {
     private String parseRecordType;
 
     /**
+     * 记录值
+     */
+    @Excel(name = "记录值")
+    private String recordTheValue;
+
+    /**
      * Access ID
      */
     @Excel(name = "Access ID")

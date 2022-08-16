@@ -9,6 +9,7 @@
         <result property="domain" column="domain"/>
         <result property="hostRecord" column="host_record"/>
         <result property="parseRecordType" column="parse_record_type"/>
+        <result property="recordTheValue" column="record_the_value"/>
         <result property="accessId" column="access_id"/>
         <result property="remark" column="remark"/>
         <result property="createBy" column="create_by"/>
@@ -22,6 +23,7 @@
                domain,
                host_record,
                parse_record_type,
+               record_the_value,
                access_id,
                remark,
                create_by,
@@ -38,6 +40,7 @@
             <if test="hostRecord != null  and hostRecord != ''">and host_record = #{hostRecord}</if>
             <if test="parseRecordType != null  and parseRecordType != ''">and parse_record_type = #{parseRecordType}
             </if>
+            <if test="recordTheValue != null  and recordTheValue != ''">and record_the_value = #{recordTheValue}</if>
             <if test="accessId != null ">and access_id = #{accessId}</if>
         </where>
     </select>
@@ -53,6 +56,7 @@
             <if test="domain != null and domain != ''">domain,</if>
             <if test="hostRecord != null and hostRecord != ''">host_record,</if>
             <if test="parseRecordType != null and parseRecordType != ''">parse_record_type,</if>
+            <if test="recordTheValue != null and recordTheValue != ''">record_the_value,</if>
             <if test="accessId != null">access_id,</if>
             <if test="remark != null">remark,</if>
             <if test="createBy != null">create_by,</if>
@@ -64,6 +68,7 @@
             <if test="domain != null and domain != ''">#{domain},</if>
             <if test="hostRecord != null and hostRecord != ''">#{hostRecord},</if>
             <if test="parseRecordType != null and parseRecordType != ''">#{parseRecordType},</if>
+            <if test="recordTheValue != null and recordTheValue != ''">#{recordTheValue},</if>
             <if test="accessId != null">#{accessId},</if>
             <if test="remark != null">#{remark},</if>
             <if test="createBy != null">#{createBy},</if>
@@ -79,6 +84,7 @@
             <if test="domain != null and domain != ''">domain = #{domain},</if>
             <if test="hostRecord != null and hostRecord != ''">host_record = #{hostRecord},</if>
             <if test="parseRecordType != null and parseRecordType != ''">parse_record_type = #{parseRecordType},</if>
+            <if test="recordTheValue != null and recordTheValue != ''">record_the_value = #{recordTheValue},</if>
             <if test="accessId != null">access_id = #{accessId},</if>
             <if test="remark != null">remark = #{remark},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
