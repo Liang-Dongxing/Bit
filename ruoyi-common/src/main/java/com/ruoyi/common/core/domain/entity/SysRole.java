@@ -93,7 +93,9 @@ public class SysRole extends BaseEntity {
      */
     private Long[] deptIds;
 
-    /** 角色菜单权限 */
+    /**
+     * 角色菜单权限
+     */
     private Set<String> permissions;
 
     public SysRole(Long roleId) {
