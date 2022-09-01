@@ -8,14 +8,13 @@ import java.util.List;
 
 /**
  * 路由配置信息
- * 
+ *
  * @author ruoyi
  */
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class RouterVo
-{
+public class RouterVo {
     /**
      * 路由名字
      */

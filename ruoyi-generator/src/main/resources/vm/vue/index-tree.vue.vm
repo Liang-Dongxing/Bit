@@ -2,16 +2,16 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
 #foreach($column in $columns)
-#if($column.query)
-#set($dictType=$column.dictType)
-#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
-#set($parentheseIndex=$column.columnComment.indexOf("（"))
-#if($parentheseIndex != -1)
-#set($comment=$column.columnComment.substring(0, $parentheseIndex))
-#else
-#set($comment=$column.columnComment)
-#end
-#if($column.htmlType == "input")
+    #if($column.query)
+        #set($dictType=$column.dictType)
+        #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+        #set($parentheseIndex=$column.columnComment.indexOf("（"))
+        #if($parentheseIndex != -1)
+            #set($comment=$column.columnComment.substring(0, $parentheseIndex))
+        #else
+            #set($comment=$column.columnComment)
+        #end
+        #if($column.htmlType == "input")
       <el-form-item label="${comment}" prop="${column.javaField}">
         <el-input
           v-model="queryParams.${column.javaField}"
@@ -58,7 +58,7 @@
         ></el-date-picker>
       </el-form-item>
 #end
-#end
+    #end
 #end
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
@@ -96,15 +96,15 @@
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
 #foreach($column in $columns)
-#set($javaField=$column.javaField)
-#set($parentheseIndex=$column.columnComment.indexOf("（"))
-#if($parentheseIndex != -1)
-#set($comment=$column.columnComment.substring(0, $parentheseIndex))
-#else
-#set($comment=$column.columnComment)
-#end
-#if($column.pk)
-#elseif($column.list && $column.htmlType == "datetime")
+    #set($javaField=$column.javaField)
+    #set($parentheseIndex=$column.columnComment.indexOf("（"))
+    #if($parentheseIndex != -1)
+        #set($comment=$column.columnComment.substring(0, $parentheseIndex))
+    #else
+        #set($comment=$column.columnComment)
+    #end
+    #if($column.pk)
+    #elseif($column.list && $column.htmlType == "datetime")
       <el-table-column label="${comment}" align="center" prop="${javaField}" width="180">
         <template #default="scope">
           <span>{{ parseTime(scope.row.${javaField}, '{y}-{m}-{d}') }}</span>
@@ -127,12 +127,12 @@
         </template>
       </el-table-column>
 #elseif($column.list && "" != $javaField)
-#if(${foreach.index} == 1)
+        #if(${foreach.index} == 1)
       <el-table-column label="${comment}" prop="${javaField}" />
 #else
       <el-table-column label="${comment}" align="center" prop="${javaField}" />
 #end
-#end
+    #end
 #end
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
@@ -162,17 +162,17 @@
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="${businessName}Ref" :model="form" :rules="rules" label-width="80px">
 #foreach($column in $columns)
-#set($field=$column.javaField)
-#if($column.insert && !$column.pk)
-#if(($column.usableColumn) || (!$column.superColumn))
-#set($parentheseIndex=$column.columnComment.indexOf("（"))
-#if($parentheseIndex != -1)
-#set($comment=$column.columnComment.substring(0, $parentheseIndex))
-#else
-#set($comment=$column.columnComment)
-#end
-#set($dictType=$column.dictType)
-#if("" != $treeParentCode && $column.javaField == $treeParentCode)
+    #set($field=$column.javaField)
+    #if($column.insert && !$column.pk)
+        #if(($column.usableColumn) || (!$column.superColumn))
+            #set($parentheseIndex=$column.columnComment.indexOf("（"))
+            #if($parentheseIndex != -1)
+                #set($comment=$column.columnComment.substring(0, $parentheseIndex))
+            #else
+                #set($comment=$column.columnComment)
+            #end
+            #set($dictType=$column.dictType)
+            #if("" != $treeParentCode && $column.javaField == $treeParentCode)
         <el-form-item label="${comment}" prop="${treeParentCode}">
           <el-tree-select
             v-model="form.${treeParentCode}"
@@ -206,7 +206,8 @@
               v-for="dict in ${dictType}"
               :key="dict.value"
               :label="dict.label"
-              #if($column.javaType == "Integer" || $column.javaType == "Long"):value="parseInt(dict.value)"#else:value="dict.value"#end
+              #if($column.javaType == "Integer" || $column.javaType ==
+                "Long"):value="parseInt(dict.value)"#else:value="dict.value"#end
 
             ></el-option>
           </el-select>
@@ -240,7 +241,8 @@
             <el-radio
               v-for="dict in ${dictType}"
               :key="dict.value"
-              #if($column.javaType == "Integer" || $column.javaType == "Long"):label="parseInt(dict.value)"#else:label="dict.value"#end
+              #if($column.javaType == "Integer" || $column.javaType ==
+                "Long"):label="parseInt(dict.value)"#else:label="dict.value"#end
 
             >{{dict.label}}</el-radio>
           </el-radio-group>
@@ -265,8 +267,8 @@
           <el-input v-model="form.${field}" type="textarea" placeholder="请输入内容" />
         </el-form-item>
 #end
-#end
-#end
+        #end
+    #end
 #end
       </el-form>
       <template #footer>
@@ -284,7 +286,7 @@ import { list${BusinessName}, get${BusinessName}, del${BusinessName}, add${Busin
 
 const { proxy } = getCurrentInstance();
 #if(${dicts} != '')
-#set($dictsNoSymbol=$dicts.replace("'", ""))
+    #set($dictsNoSymbol=$dicts.replace("'", ""))
 const { ${dictsNoSymbol} } = proxy.useDict(${dicts});
 #end
 
@@ -297,8 +299,8 @@ const title = ref("");
 const isExpandAll = ref(true);
 const refreshTable = ref(true);
 #foreach ($column in $columns)
-#if($column.htmlType == "datetime" && $column.queryType == "BETWEEN")
-#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+    #if($column.htmlType == "datetime" && $column.queryType == "BETWEEN")
+        #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
 const daterange${AttrName} = ref([]);
 #end
 #end
@@ -307,24 +309,24 @@ const data = reactive({
   form: {},
   queryParams: {
     #foreach ($column in $columns)
-#if($column.query)
-    $column.javaField: null#if($foreach.count != $columns.size()),#end
-#end
+    #if($column.query)
+        $column.javaField: null#if($foreach.count != $columns.size()),#end
+    #end
 #end
   },
   rules: {
     #foreach ($column in $columns)
-#if($column.required)
-#set($parentheseIndex=$column.columnComment.indexOf("（"))
-#if($parentheseIndex != -1)
-#set($comment=$column.columnComment.substring(0, $parentheseIndex))
-#else
-#set($comment=$column.columnComment)
-#end
-    $column.javaField: [
+    #if($column.required)
+        #set($parentheseIndex=$column.columnComment.indexOf("（"))
+        #if($parentheseIndex != -1)
+            #set($comment=$column.columnComment.substring(0, $parentheseIndex))
+        #else
+            #set($comment=$column.columnComment)
+        #end
+        $column.javaField: [
       { required: true, message: "$comment不能为空", trigger: #if($column.htmlType == "select")"change"#else"blur"#end }
     ]#if($foreach.count != $columns.size()),#end
-#end
+    #end
 #end
   }
 });
@@ -335,14 +337,14 @@ const { queryParams, form, rules } = toRefs(data);
 function getList() {
   loading.value = true;
 #foreach ($column in $columns)
-#if($column.htmlType == "datetime" && $column.queryType == "BETWEEN")
+    #if($column.htmlType == "datetime" && $column.queryType == "BETWEEN")
   queryParams.value.params = {};
 #break
-#end
+    #end
 #end
 #foreach ($column in $columns)
-#if($column.htmlType == "datetime" && $column.queryType == "BETWEEN")
-#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+    #if($column.htmlType == "datetime" && $column.queryType == "BETWEEN")
+        #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
   if (null != daterange${AttrName} && '' != daterange${AttrName}) {
     queryParams.value.params["begin${AttrName}"] = daterange${AttrName}.value[0];
     queryParams.value.params["end${AttrName}"] = daterange${AttrName}.value[1];
@@ -375,14 +377,15 @@ function cancel() {
 function reset() {
   form.value = {
 #foreach ($column in $columns)
-#if($column.htmlType == "radio")
-    $column.javaField: #if($column.javaType == "Integer" || $column.javaType == "Long")0#else"0"#end#if($foreach.count != $columns.size()),#end
+    #if($column.htmlType == "radio")
+        $column.javaField: #if($column.javaType == "Integer" || $column.javaType ==
+        "Long")0#else"0"#end#if($foreach.count != $columns.size()),#end
 
-#elseif($column.htmlType == "checkbox")
-    $column.javaField: []#if($foreach.count != $columns.size()),#end
-#else
-    $column.javaField: null#if($foreach.count != $columns.size()),#end
-#end
+    #elseif($column.htmlType == "checkbox")
+        $column.javaField: []#if($foreach.count != $columns.size()),#end
+    #else
+        $column.javaField: null#if($foreach.count != $columns.size()),#end
+    #end
 #end
   };
   proxy.resetForm("${businessName}Ref");
@@ -396,8 +399,8 @@ function handleQuery() {
 /** 重置按钮操作 */
 function resetQuery() {
 #foreach ($column in $columns)
-#if($column.htmlType == "datetime" && $column.queryType == "BETWEEN")
-#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+    #if($column.htmlType == "datetime" && $column.queryType == "BETWEEN")
+        #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
   daterange${AttrName}.value = [];
 #end
 #end
@@ -437,7 +440,7 @@ async function handleUpdate(row) {
   get${BusinessName}(row.${pkColumn.javaField}).then(response => {
     form.value = response.data;
 #foreach ($column in $columns)
-#if($column.htmlType == "checkbox")
+    #if($column.htmlType == "checkbox")
     form.value.$column.javaField = form.value.${column.javaField}.split(",");
 #end
 #end

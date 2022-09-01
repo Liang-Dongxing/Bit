@@ -8,29 +8,36 @@ import lombok.NoArgsConstructor;
 
 /**
  * 第三方AccessKey管理对象 sys_third_access
- * 
+ *
  * @author ruoyi
  * @date 2022-08-14
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class SysThirdAccess extends BaseEntity
-{
+public class SysThirdAccess extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
-    /** Access ID */
+    /**
+     * Access ID
+     */
     private Long accessId;
 
-    /** AccessKey Secret */
+    /**
+     * AccessKey Secret
+     */
     @Excel(name = "AccessKey Secret")
     private String accessKeySecret;
 
-    /** AccessKey ID */
+    /**
+     * AccessKey ID
+     */
     @Excel(name = "AccessKey ID")
     private String accessKeyId;
 
-    /** AccessKey 平台 */
+    /**
+     * AccessKey 平台
+     */
     @Excel(name = "AccessKey 平台")
     private String accessKeyType;
 
