@@ -41,10 +41,9 @@ public class DDNSTask {
             SysDdns sysDdns = new SysDdns();
             sysDdns.setAccessId(thirdAccess.getAccessId());
             List<SysDdns> sysDdnsList = iSysDdnsService.selectSysDdnsList(sysDdns);
-            for (SysDdns sysDdn : sysDdnsList) {
-                SysThirdAccess sysThirdAccessTemp = iSysThirdAccessService.selectSysThirdAccessByAccessId(sysDdn.getAccessId());
-                getDdns(sysDdn, sysThirdAccessTemp);
-                iSysDdnsService.updateSysDdns(sysDdn);
+            for (SysDdns sysDdnsOne : sysDdnsList) {
+                SysThirdAccess sysThirdAccessTemp = iSysThirdAccessService.selectSysThirdAccessByAccessId(sysDdnsOne.getAccessId());
+                getDdns(sysDdnsOne, sysThirdAccessTemp);
             }
         }
 
@@ -95,6 +94,7 @@ public class DDNSTask {
                 log.info("updateDomainRecord");
                 log.info(JSON.toJSONString(updateDomainRecordResponse, JSONWriter.Feature.PrettyFormat));
                 sysDdns.setRecordTheValue(currentHostIP);
+                iSysDdnsService.updateSysDdns(sysDdns);
                 if ("@".equals(sysDdns.getHostRecord())) {
                     getDdns(sysDdns, sysThirdAccess);
                 }
