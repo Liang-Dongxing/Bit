@@ -1,5 +1,6 @@
 package com.ruoyi.common.config;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConfigurationProperties(prefix = "ruoyi")
+@Data
 public class RuoYiConfig {
     /**
      * 上传路径
@@ -18,11 +20,23 @@ public class RuoYiConfig {
     /**
      * 获取地址开关
      */
-    private static boolean addressEnabled;
+    private static Boolean addressEnabled;
     /**
      * 验证码类型
      */
     private static String captchaType;
+    /**
+     * 验证码图片格式
+     */
+    private static String captchaImageFormat;
+    /**
+     * 验证码长
+     */
+    private Integer captchaWidth;
+    /**
+     * 验证码宽
+     */
+    private Integer captchaHeight;
     /**
      * 项目名称
      */
@@ -38,7 +52,7 @@ public class RuoYiConfig {
     /**
      * 实例演示开关
      */
-    private boolean demoEnabled;
+    private Boolean demoEnabled;
 
     public static String getProfile() {
         return profile;
@@ -84,22 +98,6 @@ public class RuoYiConfig {
         return getProfile() + "/upload";
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
     public static String getCaptchaType() {
         return captchaType;
     }
@@ -108,19 +106,12 @@ public class RuoYiConfig {
         RuoYiConfig.captchaType = captchaType;
     }
 
-    public String getCopyrightYear() {
-        return copyrightYear;
+    public static String getCaptchaImageFormat() {
+        return captchaImageFormat;
     }
 
-    public void setCopyrightYear(String copyrightYear) {
-        this.copyrightYear = copyrightYear;
+    public void setCaptchaImageFormat(String captchaImageFormat) {
+        RuoYiConfig.captchaImageFormat = captchaImageFormat;
     }
 
-    public boolean isDemoEnabled() {
-        return demoEnabled;
-    }
-
-    public void setDemoEnabled(boolean demoEnabled) {
-        this.demoEnabled = demoEnabled;
-    }
 }

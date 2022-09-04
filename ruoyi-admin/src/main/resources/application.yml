@@ -13,7 +13,12 @@ ruoyi:
   # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数组计算 char 字符验证
-  captchaType: math
+  captchaType: char
+  # 验证码图片格式 GIF 和 png
+  captchaImageFormat: gif
+  # 验证码长宽
+  captchaWidth: 160
+  captchaHeight: 60
 
 # 开发环境配置
 server:
