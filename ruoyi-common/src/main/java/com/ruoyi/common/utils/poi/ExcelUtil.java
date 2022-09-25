@@ -803,7 +803,6 @@ public class ExcelUtil<T> {
             String key = StringUtils.format("header_{}_{}", excel.headerColor(), excel.headerBackgroundColor());
             if (!headerStyles.containsKey(key)) {
                 CellStyle style = wb.createCellStyle();
-                style = wb.createCellStyle();
                 style.cloneStyleFrom(styles.get("data"));
                 style.setAlignment(HorizontalAlignment.CENTER);
                 style.setVerticalAlignment(VerticalAlignment.CENTER);
@@ -834,7 +833,6 @@ public class ExcelUtil<T> {
             String key = StringUtils.format("data_{}_{}_{}", excel.align(), excel.color(), excel.backgroundColor());
             if (!styles.containsKey(key)) {
                 CellStyle style = wb.createCellStyle();
-                style = wb.createCellStyle();
                 style.setAlignment(excel.align());
                 style.setVerticalAlignment(VerticalAlignment.CENTER);
                 style.setBorderRight(BorderStyle.THIN);
