@@ -46,8 +46,8 @@ public class RateLimiterAspect {
     }
 
     @Before("@annotation(rateLimiter)")
-    public void doBefore(JoinPoint point, RateLimiter rateLimiter) throws Throwable {
-        String key = rateLimiter.key();
+    public void doBefore(JoinPoint point, RateLimiter rateLimiter) throws Throwable
+    {
         int time = rateLimiter.time();
         int count = rateLimiter.count();
 
@@ -58,8 +58,10 @@ public class RateLimiterAspect {
             if (StringUtils.isNull(number) || number.intValue() > count) {
                 throw new ServiceException("访问过于频繁，请稍候再试");
             }
-            log.info("限制请求'{}',当前请求'{}',缓存key'{}'", count, number.intValue(), key);
-        } catch (ServiceException e) {
+            log.info("限制请求'{}',当前请求'{}',缓存key'{}'", count, number.intValue(), combineKey);
+        }
+        catch (ServiceException e)
+        {
             throw e;
         } catch (Exception e) {
             throw new RuntimeException("服务器限流异常，请稍候再试");
