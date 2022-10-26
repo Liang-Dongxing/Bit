@@ -16,6 +16,6 @@ public class BitApplication {
     public static void main(String[] args) {
         // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(BitApplication.class, args);
-        System.out.println("(♥◠‿◠)ﾉﾞ  Bit启动成功   ლ(´ڡ`ლ)ﾞ");
+        System.out.println("(♥◠‿◠)ﾉﾞ  Bit 启动成功   ლ(´ڡ`ლ)ﾞ");
     }
 }
