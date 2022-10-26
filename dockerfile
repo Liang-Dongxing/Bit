@@ -10,12 +10,12 @@ RUN ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo $TIME_ZONE > /
 EXPOSE 8080
 
 # 挂载目录
-VOLUME /home/ruoyi
+VOLUME /home/bit
 # 创建目录
-RUN mkdir -p /home/ruoyi
+RUN mkdir -p /home/bit
 # 指定路径
-WORKDIR /home/ruoyi
+WORKDIR /home/bit
 # 复制jar文件到路径
-COPY ./ruoyi-admin/target/ruoyi-admin.jar /home/ruoyi/ruoyi-admin.jar
+COPY ./bit-admin/target/bit-admin.jar /home/bit/bit-admin.jar
 # 启动认证服务
-ENTRYPOINT ["java","-jar","ruoyi-admin.jar"]
+ENTRYPOINT ["java","-jar","bit-admin.jar"]

@@ -3,70 +3,96 @@
 -- ----------------------------
 drop table if exists sys_dept;
 create table sys_dept (
-  dept_id           bigint(20)      not null auto_increment    comment '部门id',
-  parent_id         bigint(20)      default 0                  comment '父部门id',
-  ancestors         varchar(50)     default ''                 comment '祖级列表',
-  dept_name         varchar(30)     default ''                 comment '部门名称',
-  order_num         int(4)          default 0                  comment '显示顺序',
-  leader            varchar(20)     default null               comment '负责人',
-  phone             varchar(11)     default null               comment '联系电话',
-  email             varchar(50)     default null               comment '邮箱',
-  status            char(1)         default '0'                comment '部门状态（0正常 1停用）',
-  del_flag          char(1)         default '0'                comment '删除标志（0代表存在 2代表删除）',
-  create_by         varchar(64)     default ''                 comment '创建者',
-  create_time 	    datetime                                   comment '创建时间',
-  update_by         varchar(64)     default ''                 comment '更新者',
-  update_time       datetime                                   comment '更新时间',
-  primary key (dept_id)
-) engine=innodb auto_increment=200 comment = '部门表';
+                          dept_id     bigint(20)      not null auto_increment    comment '部门id',
+                          parent_id   bigint(20)  default 0                  comment '父部门id',
+                          ancestors   varchar(50) default ''                 comment '祖级列表',
+                          dept_name   varchar(30) default ''                 comment '部门名称',
+                          order_num   int(4)      default 0                  comment '显示顺序',
+                          leader      varchar(20) default null               comment '负责人',
+                          phone       varchar(11) default null               comment '联系电话',
+                          email       varchar(50) default null               comment '邮箱',
+                          status      char(1)     default '0'                comment '部门状态（0正常 1停用）',
+                          del_flag    char(1)     default '0'                comment '删除标志（0代表存在 2代表删除）',
+                          create_by   varchar(64) default '' comment '创建者',
+                          create_time datetime comment '创建时间',
+                          update_by   varchar(64) default '' comment '更新者',
+                          update_time datetime comment '更新时间',
+                          primary key (dept_id)
+) engine = innodb
+  auto_increment = 200 comment = '部门表';
 
 -- ----------------------------
 -- 初始化-部门表数据
 -- ----------------------------
-insert into sys_dept values(100,  0,   '0',          '若依科技',   0, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(101,  100, '0,100',      '深圳总公司', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(102,  100, '0,100',      '长沙分公司', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(103,  101, '0,100,101',  '研发部门',   1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(104,  101, '0,100,101',  '市场部门',   2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(105,  101, '0,100,101',  '测试部门',   3, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(106,  101, '0,100,101',  '财务部门',   4, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(107,  101, '0,100,101',  '运维部门',   5, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(108,  102, '0,100,102',  '市场部门',   1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(109,  102, '0,100,102',  '财务部门',   2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept
+values (100, 0, '0', 'Bit科技', 0, 'Bit', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept
+values (101, 100, '0,100', '深圳总公司', 1, 'Bit', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept
+values (102, 100, '0,100', '长沙分公司', 2, 'Bit', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept
+values (103, 101, '0,100,101', '研发部门', 1, 'Bit', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '',
+        null);
+insert into sys_dept
+values (104, 101, '0,100,101', '市场部门', 2, 'Bit', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '',
+        null);
+insert into sys_dept
+values (105, 101, '0,100,101', '测试部门', 3, 'Bit', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '',
+        null);
+insert into sys_dept
+values (106, 101, '0,100,101', '财务部门', 4, 'Bit', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '',
+        null);
+insert into sys_dept
+values (107, 101, '0,100,101', '运维部门', 5, 'Bit', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '',
+        null);
+insert into sys_dept
+values (108, 102, '0,100,102', '市场部门', 1, 'Bit', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '',
+        null);
+insert into sys_dept
+values (109, 102, '0,100,102', '财务部门', 2, 'Bit', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '',
+        null);
 
 
 -- ----------------------------
 -- 2、用户信息表
 -- ----------------------------
 drop table if exists sys_user;
-create table sys_user (
-  user_id           bigint(20)      not null auto_increment    comment '用户ID',
-  dept_id           bigint(20)      default null               comment '部门ID',
-  user_name         varchar(30)     not null                   comment '用户账号',
-  nick_name         varchar(30)     not null                   comment '用户昵称',
-  user_type         varchar(2)      default '00'               comment '用户类型（00系统用户）',
-  email             varchar(50)     default ''                 comment '用户邮箱',
-  phonenumber       varchar(11)     default ''                 comment '手机号码',
-  sex               char(1)         default '0'                comment '用户性别（0男 1女 2未知）',
-  avatar            varchar(100)    default ''                 comment '头像地址',
-  password          varchar(100)    default ''                 comment '密码',
-  status            char(1)         default '0'                comment '帐号状态（0正常 1停用）',
-  del_flag          char(1)         default '0'                comment '删除标志（0代表存在 2代表删除）',
-  login_ip          varchar(128)    default ''                 comment '最后登录IP',
-  login_date        datetime                                   comment '最后登录时间',
-  create_by         varchar(64)     default ''                 comment '创建者',
-  create_time       datetime                                   comment '创建时间',
-  update_by         varchar(64)     default ''                 comment '更新者',
-  update_time       datetime                                   comment '更新时间',
-  remark            varchar(500)    default null               comment '备注',
-  primary key (user_id)
-) engine=innodb auto_increment=100 comment = '用户信息表';
+create table sys_user
+(
+    user_id     bigint(20)      not null auto_increment comment '用户ID',
+    dept_id     bigint(20)      default null comment '部门ID',
+    user_name   varchar(30)     not null comment '用户账号',
+    nick_name   varchar(30)     not null                   comment '用户昵称',
+    user_type   varchar(2)      default '00'               comment '用户类型（00系统用户）',
+    email       varchar(50)     default ''                 comment '用户邮箱',
+    phonenumber varchar(11)     default ''                 comment '手机号码',
+    sex         char(1)         default '0'                comment '用户性别（0男 1女 2未知）',
+    avatar      varchar(100)    default ''                 comment '头像地址',
+    password    varchar(100)    default ''                 comment '密码',
+    status      char(1)         default '0'                comment '帐号状态（0正常 1停用）',
+    del_flag    char(1)         default '0'                comment '删除标志（0代表存在 2代表删除）',
+    login_ip    varchar(128)    default ''                 comment '最后登录IP',
+    login_date  datetime                                   comment '最后登录时间',
+    create_by   varchar(64)     default ''                 comment '创建者',
+    create_time datetime comment '创建时间',
+    update_by   varchar(64)     default '' comment '更新者',
+    update_time datetime comment '更新时间',
+    remark      varchar(500)    default null comment '备注',
+    primary key (user_id)
+) engine = innodb
+  auto_increment = 100 comment = '用户信息表';
 
 -- ----------------------------
 -- 初始化-用户信息表数据
 -- ----------------------------
-insert into sys_user values(1,  103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), 'admin', sysdate(), '', null, '管理员');
-insert into sys_user values(2,  105, 'ry',    '若依', '00', 'ry@qq.com',  '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), 'admin', sysdate(), '', null, '测试员');
+insert into sys_user
+values (1, 103, 'admin', 'Bit', '00', 'ry@163.com', '15888888888', '1', '',
+        '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), 'admin',
+        sysdate(), '', null, '管理员');
+insert into sys_user
+values (2, 105, 'ry', 'Bit', '00', 'ry@qq.com', '15666666666', '1', '',
+        '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), 'admin',
+        sysdate(), '', null, '测试员');
 
 
 -- ----------------------------
@@ -75,8 +101,8 @@ insert into sys_user values(2,  105, 'ry',    '若依', '00', 'ry@qq.com',  '156
 drop table if exists sys_post;
 create table sys_post
 (
-  post_id       bigint(20)      not null auto_increment    comment '岗位ID',
-  post_code     varchar(64)     not null                   comment '岗位编码',
+    post_id     bigint(20)      not null auto_increment comment '岗位ID',
+    post_code   varchar(64)     not null comment '岗位编码',
   post_name     varchar(50)     not null                   comment '岗位名称',
   post_sort     int(4)          not null                   comment '显示顺序',
   status        char(1)         not null                   comment '状态（0正常 1停用）',
@@ -131,46 +157,73 @@ insert into sys_role values('2', '普通角色',    'common', 2, 2, 1, 1, '0', '
 -- ----------------------------
 drop table if exists sys_menu;
 create table sys_menu (
-  menu_id           bigint(20)      not null auto_increment    comment '菜单ID',
-  menu_name         varchar(50)     not null                   comment '菜单名称',
-  parent_id         bigint(20)      default 0                  comment '父菜单ID',
-  order_num         int(4)          default 0                  comment '显示顺序',
-  path              varchar(200)    default ''                 comment '路由地址',
-  component         varchar(255)    default null               comment '组件路径',
-  query             varchar(255)    default null               comment '路由参数',
-  is_frame          int(1)          default 1                  comment '是否为外链（0是 1否）',
-  is_cache          int(1)          default 0                  comment '是否缓存（0缓存 1不缓存）',
-  menu_type         char(1)         default ''                 comment '菜单类型（M目录 C菜单 F按钮）',
-  visible           char(1)         default 0                  comment '菜单状态（0显示 1隐藏）',
-  status            char(1)         default 0                  comment '菜单状态（0正常 1停用）',
-  perms             varchar(100)    default null               comment '权限标识',
-  icon              varchar(100)    default '#'                comment '菜单图标',
-  create_by         varchar(64)     default ''                 comment '创建者',
-  create_time       datetime                                   comment '创建时间',
-  update_by         varchar(64)     default ''                 comment '更新者',
-  update_time       datetime                                   comment '更新时间',
-  remark            varchar(500)    default ''                 comment '备注',
-  primary key (menu_id)
-) engine=innodb auto_increment=2000 comment = '菜单权限表';
+                          menu_id           bigint(20)      not null auto_increment    comment '菜单ID',
+                          menu_name         varchar(50)     not null                   comment '菜单名称',
+                          parent_id         bigint(20)      default 0                  comment '父菜单ID',
+                          order_num         int(4)          default 0                  comment '显示顺序',
+                          path              varchar(200)    default ''                 comment '路由地址',
+                          component         varchar(255)    default null               comment '组件路径',
+                          query             varchar(255)    default null               comment '路由参数',
+                          is_frame          int(1)          default 1                  comment '是否为外链（0是 1否）',
+                          is_cache          int(1)          default 0                  comment '是否缓存（0缓存 1不缓存）',
+                          menu_type         char(1)         default ''                 comment '菜单类型（M目录 C菜单 F按钮）',
+                          visible           char(1)         default 0                  comment '菜单状态（0显示 1隐藏）',
+                          status            char(1)         default 0                  comment '菜单状态（0正常 1停用）',
+                          perms             varchar(100)    default null               comment '权限标识',
+                          icon              varchar(100)    default '#'                comment '菜单图标',
+                          create_by         varchar(64)     default ''                 comment '创建者',
+                          create_time       datetime                                   comment '创建时间',
+                          update_by         varchar(64)     default ''                 comment '更新者',
+                          update_time       datetime                                   comment '更新时间',
+                          remark            varchar(500)    default ''                 comment '备注',
+                          primary key (menu_id)
+) engine = innodb
+  auto_increment = 2000 comment = '菜单权限表';
 
 -- ----------------------------
 -- 初始化-菜单信息表数据
 -- ----------------------------
 -- 一级菜单
-insert into sys_menu values('1', '系统管理', '0', '1', 'system',           null, '', 1, 0, 'M', '0', '0', '', 'system',   'admin', sysdate(), '', null, '系统管理目录');
-insert into sys_menu values('2', '系统监控', '0', '2', 'monitor',          null, '', 1, 0, 'M', '0', '0', '', 'monitor',  'admin', sysdate(), '', null, '系统监控目录');
-insert into sys_menu values('3', '系统工具', '0', '3', 'tool',             null, '', 1, 0, 'M', '0', '0', '', 'tool',     'admin', sysdate(), '', null, '系统工具目录');
-insert into sys_menu values('4', '若依官网', '0', '4', 'http://ruoyi.vip', null, '', 0, 0, 'M', '0', '0', '', 'guide',    'admin', sysdate(), '', null, '若依官网地址');
+insert into sys_menu
+values ('1', '系统管理', '0', '1', 'system', null, '', 1, 0, 'M', '0', '0', '', 'system', 'admin', sysdate(), '', null,
+        '系统管理目录');
+insert into sys_menu
+values ('2', '系统监控', '0', '2', 'monitor', null, '', 1, 0, 'M', '0', '0', '', 'monitor', 'admin', sysdate(), '',
+        null, '系统监控目录');
+insert into sys_menu
+values ('3', '系统工具', '0', '3', 'tool', null, '', 1, 0, 'M', '0', '0', '', 'tool', 'admin', sysdate(), '', null,
+        '系统工具目录');
+insert into sys_menu
+values ('4', 'Bit官网', '0', '4', 'http://bit.vip', null, '', 0, 0, 'M', '0', '0', '', 'guide', 'admin', sysdate(), '',
+        null, 'Bit官网地址');
 -- 二级菜单
-insert into sys_menu values('100',  '用户管理', '1',   '1', 'user',       'system/user/index',        '', 1, 0, 'C', '0', '0', 'system:user:list',        'user',          'admin', sysdate(), '', null, '用户管理菜单');
-insert into sys_menu values('101',  '角色管理', '1',   '2', 'role',       'system/role/index',        '', 1, 0, 'C', '0', '0', 'system:role:list',        'peoples',       'admin', sysdate(), '', null, '角色管理菜单');
-insert into sys_menu values('102',  '菜单管理', '1',   '3', 'menu',       'system/menu/index',        '', 1, 0, 'C', '0', '0', 'system:menu:list',        'tree-table',    'admin', sysdate(), '', null, '菜单管理菜单');
-insert into sys_menu values('103',  '部门管理', '1',   '4', 'dept',       'system/dept/index',        '', 1, 0, 'C', '0', '0', 'system:dept:list',        'tree',          'admin', sysdate(), '', null, '部门管理菜单');
-insert into sys_menu values('104',  '岗位管理', '1',   '5', 'post',       'system/post/index',        '', 1, 0, 'C', '0', '0', 'system:post:list',        'post',          'admin', sysdate(), '', null, '岗位管理菜单');
-insert into sys_menu values('105',  '字典管理', '1',   '6', 'dict',       'system/dict/index',        '', 1, 0, 'C', '0', '0', 'system:dict:list',        'dict',          'admin', sysdate(), '', null, '字典管理菜单');
-insert into sys_menu values('106',  '参数设置', '1',   '7', 'config',     'system/config/index',      '', 1, 0, 'C', '0', '0', 'system:config:list',      'edit',          'admin', sysdate(), '', null, '参数设置菜单');
-insert into sys_menu values('107',  '通知公告', '1',   '8', 'notice',     'system/notice/index',      '', 1, 0, 'C', '0', '0', 'system:notice:list',      'message',       'admin', sysdate(), '', null, '通知公告菜单');
-insert into sys_menu values('108',  '日志管理', '1',   '9', 'log',        '',                         '', 1, 0, 'M', '0', '0', '',                        'log',           'admin', sysdate(), '', null, '日志管理菜单');
+insert into sys_menu
+values ('100', '用户管理', '1', '1', 'user', 'system/user/index', '', 1, 0, 'C', '0', '0', 'system:user:list', 'user',
+        'admin', sysdate(), '', null, '用户管理菜单');
+insert into sys_menu
+values ('101', '角色管理', '1', '2', 'role', 'system/role/index', '', 1, 0, 'C', '0', '0', 'system:role:list',
+        'peoples', 'admin', sysdate(), '', null, '角色管理菜单');
+insert into sys_menu
+values ('102', '菜单管理', '1', '3', 'menu', 'system/menu/index', '', 1, 0, 'C', '0', '0', 'system:menu:list',
+        'tree-table', 'admin', sysdate(), '', null, '菜单管理菜单');
+insert into sys_menu
+values ('103', '部门管理', '1', '4', 'dept', 'system/dept/index', '', 1, 0, 'C', '0', '0', 'system:dept:list', 'tree',
+        'admin', sysdate(), '', null, '部门管理菜单');
+insert into sys_menu
+values ('104', '岗位管理', '1', '5', 'post', 'system/post/index', '', 1, 0, 'C', '0', '0', 'system:post:list', 'post',
+        'admin', sysdate(), '', null, '岗位管理菜单');
+insert into sys_menu
+values ('105', '字典管理', '1', '6', 'dict', 'system/dict/index', '', 1, 0, 'C', '0', '0', 'system:dict:list', 'dict',
+        'admin', sysdate(), '', null, '字典管理菜单');
+insert into sys_menu
+values ('106', '参数设置', '1', '7', 'config', 'system/config/index', '', 1, 0, 'C', '0', '0', 'system:config:list',
+        'edit', 'admin', sysdate(), '', null, '参数设置菜单');
+insert into sys_menu
+values ('107', '通知公告', '1', '8', 'notice', 'system/notice/index', '', 1, 0, 'C', '0', '0', 'system:notice:list',
+        'message', 'admin', sysdate(), '', null, '通知公告菜单');
+insert into sys_menu
+values ('108', '日志管理', '1', '9', 'log', '', '', 1, 0, 'M', '0', '0', '', 'log', 'admin', sysdate(), '', null,
+        '日志管理菜单');
 insert into sys_menu values('109',  '在线用户', '2',   '1', 'online',     'monitor/online/index',     '', 1, 0, 'C', '0', '0', 'monitor:online:list',     'online',        'admin', sysdate(), '', null, '在线用户菜单');
 insert into sys_menu values('110',  '定时任务', '2',   '2', 'job',        'monitor/job/index',        '', 1, 0, 'C', '0', '0', 'monitor:job:list',        'job',           'admin', sysdate(), '', null, '定时任务菜单');
 insert into sys_menu values('111',  '数据监控', '2',   '3', 'druid',      'monitor/druid/index',      '', 1, 0, 'C', '0', '0', 'monitor:druid:list',      'druid',         'admin', sysdate(), '', null, '数据监控菜单');
@@ -612,34 +665,38 @@ create table sys_job_log (
 -- ----------------------------
 drop table if exists sys_notice;
 create table sys_notice (
-  notice_id         int(4)          not null auto_increment    comment '公告ID',
-  notice_title      varchar(50)     not null                   comment '公告标题',
-  notice_type       char(1)         not null                   comment '公告类型（1通知 2公告）',
-  notice_content    longblob        default null               comment '公告内容',
-  status            char(1)         default '0'                comment '公告状态（0正常 1关闭）',
-  create_by         varchar(64)     default ''                 comment '创建者',
-  create_time       datetime                                   comment '创建时间',
-  update_by         varchar(64)     default ''                 comment '更新者',
-  update_time       datetime                                   comment '更新时间',
-  remark            varchar(255)    default null               comment '备注',
-  primary key (notice_id)
-) engine=innodb auto_increment=10 comment = '通知公告表';
+                            notice_id      int(4)          not null auto_increment    comment '公告ID',
+                            notice_title   varchar(50)     not null                   comment '公告标题',
+                            notice_type    char(1)         not null                   comment '公告类型（1通知 2公告）',
+                            notice_content longblob        default null               comment '公告内容',
+                            status         char(1)         default '0'                comment '公告状态（0正常 1关闭）',
+                            create_by      varchar(64)     default ''                 comment '创建者',
+                            create_time    datetime comment '创建时间',
+                            update_by      varchar(64)     default '' comment '更新者',
+                            update_time    datetime comment '更新时间',
+                            remark         varchar(255)    default null comment '备注',
+                            primary key (notice_id)
+) engine = innodb
+  auto_increment = 10 comment = '通知公告表';
 
 -- ----------------------------
 -- 初始化-公告信息表数据
 -- ----------------------------
-insert into sys_notice values('1', '温馨提醒：2018-07-01 若依新版本发布啦', '2', '新版本内容', '0', 'admin', sysdate(), '', null, '管理员');
-insert into sys_notice values('2', '维护通知：2018-07-01 若依系统凌晨维护', '1', '维护内容',   '0', 'admin', sysdate(), '', null, '管理员');
+insert into sys_notice
+values ('1', '温馨提醒：2018-07-01 Bit新版本发布啦', '2', '新版本内容', '0', 'admin', sysdate(), '', null, '管理员');
+insert into sys_notice
+values ('2', '维护通知：2018-07-01 Bit系统凌晨维护', '1', '维护内容', '0', 'admin', sysdate(), '', null, '管理员');
 
 
 -- ----------------------------
 -- 18、代码生成业务表
 -- ----------------------------
 drop table if exists gen_table;
-create table gen_table (
-  table_id          bigint(20)      not null auto_increment    comment '编号',
-  table_name        varchar(200)    default ''                 comment '表名称',
-  table_comment     varchar(500)    default ''                 comment '表描述',
+create table gen_table
+(
+    table_id        bigint(20) not null auto_increment comment '编号',
+    table_name      varchar(200)    default '' comment '表名称',
+    table_comment   varchar(500)    default '' comment '表描述',
   sub_table_name    varchar(64)     default null               comment '关联子表的表名',
   sub_table_fk_name varchar(64)     default null               comment '子表关联的外键名',
   class_name        varchar(100)    default ''                 comment '实体类名称',
