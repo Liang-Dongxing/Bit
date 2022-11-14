@@ -30,7 +30,7 @@ public class SysDdnsController extends BaseController {
     /**
      * 查询ddns 解析配置列表
      */
-    @PreAuthorize("@ss.hasPermi('ops:ddns:list')")
+    @PreAuthorize("@ss.hasPermi('tool:ddns:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysDdns sysDdns) {
         startPage();
@@ -41,7 +41,7 @@ public class SysDdnsController extends BaseController {
     /**
      * 导出ddns 解析配置列表
      */
-    @PreAuthorize("@ss.hasPermi('ops:ddns:export')")
+    @PreAuthorize("@ss.hasPermi('tool:ddns:export')")
     @Log(title = "ddns 解析配置", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysDdns sysDdns) {
@@ -53,7 +53,7 @@ public class SysDdnsController extends BaseController {
     /**
      * 获取ddns 解析配置详细信息
      */
-    @PreAuthorize("@ss.hasPermi('ops:ddns:query')")
+    @PreAuthorize("@ss.hasPermi('tool:ddns:query')")
     @GetMapping(value = "/{ddnsId}")
     public AjaxResult getInfo(@PathVariable("ddnsId") Long ddnsId) {
         return AjaxResult.success(sysDdnsService.selectSysDdnsByDdnsId(ddnsId));
@@ -62,7 +62,7 @@ public class SysDdnsController extends BaseController {
     /**
      * 新增ddns 解析配置
      */
-    @PreAuthorize("@ss.hasPermi('ops:ddns:add')")
+    @PreAuthorize("@ss.hasPermi('tool:ddns:add')")
     @Log(title = "ddns 解析配置", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SysDdns sysDdns) {
@@ -72,7 +72,7 @@ public class SysDdnsController extends BaseController {
     /**
      * 修改ddns 解析配置
      */
-    @PreAuthorize("@ss.hasPermi('ops:ddns:edit')")
+    @PreAuthorize("@ss.hasPermi('tool:ddns:edit')")
     @Log(title = "ddns 解析配置", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SysDdns sysDdns) {
@@ -82,7 +82,7 @@ public class SysDdnsController extends BaseController {
     /**
      * 删除ddns 解析配置
      */
-    @PreAuthorize("@ss.hasPermi('ops:ddns:remove')")
+    @PreAuthorize("@ss.hasPermi('tool:ddns:remove')")
     @Log(title = "ddns 解析配置", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ddnsIds}")
     public AjaxResult remove(@PathVariable Long[] ddnsIds) {

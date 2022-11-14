@@ -30,7 +30,7 @@ public class SysThirdAccessController extends BaseController {
     /**
      * 查询第三方AccessKey管理列表
      */
-    @PreAuthorize("@ss.hasPermi('ops:access:list')")
+    @PreAuthorize("@ss.hasPermi('tool:ak:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysThirdAccess sysThirdAccess) {
         startPage();
@@ -41,7 +41,7 @@ public class SysThirdAccessController extends BaseController {
     /**
      * 导出第三方AccessKey管理列表
      */
-    @PreAuthorize("@ss.hasPermi('ops:access:export')")
+    @PreAuthorize("@ss.hasPermi('tool:ak:export')")
     @Log(title = "第三方AccessKey管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysThirdAccess sysThirdAccess) {
@@ -53,7 +53,7 @@ public class SysThirdAccessController extends BaseController {
     /**
      * 获取第三方AccessKey管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('ops:access:query')")
+    @PreAuthorize("@ss.hasPermi('tool:ak:query')")
     @GetMapping(value = "/{accessId}")
     public AjaxResult getInfo(@PathVariable("accessId") Long accessId) {
         return AjaxResult.success(sysThirdAccessService.selectSysThirdAccessByAccessId(accessId));
@@ -62,7 +62,7 @@ public class SysThirdAccessController extends BaseController {
     /**
      * 新增第三方AccessKey管理
      */
-    @PreAuthorize("@ss.hasPermi('ops:access:add')")
+    @PreAuthorize("@ss.hasPermi('tool:ak:add')")
     @Log(title = "第三方AccessKey管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SysThirdAccess sysThirdAccess) {
@@ -72,7 +72,7 @@ public class SysThirdAccessController extends BaseController {
     /**
      * 修改第三方AccessKey管理
      */
-    @PreAuthorize("@ss.hasPermi('ops:access:edit')")
+    @PreAuthorize("@ss.hasPermi('tool:ak:edit')")
     @Log(title = "第三方AccessKey管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SysThirdAccess sysThirdAccess) {
@@ -82,7 +82,7 @@ public class SysThirdAccessController extends BaseController {
     /**
      * 删除第三方AccessKey管理
      */
-    @PreAuthorize("@ss.hasPermi('ops:access:remove')")
+    @PreAuthorize("@ss.hasPermi('tool:ak:remove')")
     @Log(title = "第三方AccessKey管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{accessIds}")
     public AjaxResult remove(@PathVariable Long[] accessIds) {
