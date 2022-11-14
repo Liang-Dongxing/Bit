@@ -2,6 +2,7 @@ package com.bit.common.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -52,7 +53,7 @@ public class BaseEntity implements Serializable {
     /**
      * 请求参数
      */
-    @JsonIgnore
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Map<String, Object> params;
 
     public String getSearchValue() {
