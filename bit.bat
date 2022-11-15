@@ -6,7 +6,6 @@ set AppName=bit-admin.jar
 rem JVM参数
 set JVM_OPTS="-Dname=%AppName%  -Duser.timezone=Asia/Shanghai -Xms512m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintGCDateStamps  -XX:+PrintGCDetails -XX:NewRatio=1 -XX:SurvivorRatio=30 -XX:+UseParallelGC -XX:+UseParallelOldGC"
 
-
 ECHO.
 	ECHO.  [1] 启动%AppName%
 	ECHO.  [2] 关闭%AppName%
@@ -23,6 +22,7 @@ set /p ID=
 	IF "%id%"=="4" GOTO status
 	IF "%id%"=="5" EXIT
 PAUSE
+
 :start
     for /f "usebackq tokens=1-2" %%a in (`jps -l ^| findstr %AppName%`) do (
 		set pid=%%a
@@ -52,10 +52,12 @@ rem 函数stop通过jps命令查找pid并结束进程
 		taskkill /f /pid %pid%
 	)
 goto:eof
+
 :restart
 	call :stop
     call :start
 goto:eof
+
 :status
 	for /f "usebackq tokens=1-2" %%a in (`jps -l ^| findstr %AppName%`) do (
 		set pid=%%a
