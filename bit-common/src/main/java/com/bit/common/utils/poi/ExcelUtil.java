@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 /**
  * Excel相关处理
  *
- * @author bit
+ * @author ruoyi
  */
 public class ExcelUtil<T> {
     private static final Logger log = LoggerFactory.getLogger(ExcelUtil.class);
@@ -151,152 +151,6 @@ public class ExcelUtil<T> {
 
     public ExcelUtil(Class<T> clazz) {
         this.clazz = clazz;
-    }
-
-    /**
-     * 获取画布
-     */
-    public static Drawing<?> getDrawingPatriarch(Sheet sheet) {
-        if (sheet.getDrawingPatriarch() == null) {
-            sheet.createDrawingPatriarch();
-        }
-        return sheet.getDrawingPatriarch();
-    }
-
-    /**
-     * 解析导出值 0=男,1=女,2=未知
-     *
-     * @param propertyValue 参数值
-     * @param converterExp  翻译注解
-     * @param separator     分隔符
-     * @return 解析后值
-     */
-    public static String convertByExp(String propertyValue, String converterExp, String separator) {
-        StringBuilder propertyString = new StringBuilder();
-        String[] convertSource = converterExp.split(",");
-        for (String item : convertSource) {
-            String[] itemArray = item.split("=");
-            if (StringUtils.containsAny(propertyValue, separator)) {
-                for (String value : propertyValue.split(separator)) {
-                    if (itemArray[0].equals(value)) {
-                        propertyString.append(itemArray[1] + separator);
-                        break;
-                    }
-                }
-            } else {
-                if (itemArray[0].equals(propertyValue)) {
-                    return itemArray[1];
-                }
-            }
-        }
-        return StringUtils.stripEnd(propertyString.toString(), separator);
-    }
-
-    /**
-     * 反向解析值 男=0,女=1,未知=2
-     *
-     * @param propertyValue 参数值
-     * @param converterExp  翻译注解
-     * @param separator     分隔符
-     * @return 解析后值
-     */
-    public static String reverseByExp(String propertyValue, String converterExp, String separator) {
-        StringBuilder propertyString = new StringBuilder();
-        String[] convertSource = converterExp.split(",");
-        for (String item : convertSource) {
-            String[] itemArray = item.split("=");
-            if (StringUtils.containsAny(propertyValue, separator)) {
-                for (String value : propertyValue.split(separator)) {
-                    if (itemArray[1].equals(value)) {
-                        propertyString.append(itemArray[0] + separator);
-                        break;
-                    }
-                }
-            } else {
-                if (itemArray[1].equals(propertyValue)) {
-                    return itemArray[0];
-                }
-            }
-        }
-        return StringUtils.stripEnd(propertyString.toString(), separator);
-    }
-
-    /**
-     * 解析字典值
-     *
-     * @param dictValue 字典值
-     * @param dictType  字典类型
-     * @param separator 分隔符
-     * @return 字典标签
-     */
-    public static String convertDictByExp(String dictValue, String dictType, String separator) {
-        return DictUtils.getDictLabel(dictType, dictValue, separator);
-    }
-
-    /**
-     * 反向解析值字典值
-     *
-     * @param dictLabel 字典标签
-     * @param dictType  字典类型
-     * @param separator 分隔符
-     * @return 字典值
-     */
-    public static String reverseDictByExp(String dictLabel, String dictType, String separator) {
-        return DictUtils.getDictValue(dictType, dictLabel, separator);
-    }
-
-    /**
-     * 获取Excel2003图片
-     *
-     * @param sheet    当前sheet对象
-     * @param workbook 工作簿对象
-     * @return Map key:图片单元格索引（1_1）String，value:图片流PictureData
-     */
-    public static Map<String, PictureData> getSheetPictures03(HSSFSheet sheet, HSSFWorkbook workbook) {
-        Map<String, PictureData> sheetIndexPicMap = new HashMap<String, PictureData>();
-        List<HSSFPictureData> pictures = workbook.getAllPictures();
-        if (!pictures.isEmpty()) {
-            for (HSSFShape shape : sheet.getDrawingPatriarch().getChildren()) {
-                HSSFClientAnchor anchor = (HSSFClientAnchor) shape.getAnchor();
-                if (shape instanceof HSSFPicture) {
-                    HSSFPicture pic = (HSSFPicture) shape;
-                    int pictureIndex = pic.getPictureIndex() - 1;
-                    HSSFPictureData picData = pictures.get(pictureIndex);
-                    String picIndex = String.valueOf(anchor.getRow1()) + "_" + String.valueOf(anchor.getCol1());
-                    sheetIndexPicMap.put(picIndex, picData);
-                }
-            }
-            return sheetIndexPicMap;
-        } else {
-            return sheetIndexPicMap;
-        }
-    }
-
-    /**
-     * 获取Excel2007图片
-     *
-     * @param sheet    当前sheet对象
-     * @param workbook 工作簿对象
-     * @return Map key:图片单元格索引（1_1）String，value:图片流PictureData
-     */
-    public static Map<String, PictureData> getSheetPictures07(XSSFSheet sheet, XSSFWorkbook workbook) {
-        Map<String, PictureData> sheetIndexPicMap = new HashMap<String, PictureData>();
-        for (POIXMLDocumentPart dr : sheet.getRelations()) {
-            if (dr instanceof XSSFDrawing) {
-                XSSFDrawing drawing = (XSSFDrawing) dr;
-                List<XSSFShape> shapes = drawing.getShapes();
-                for (XSSFShape shape : shapes) {
-                    if (shape instanceof XSSFPicture) {
-                        XSSFPicture pic = (XSSFPicture) shape;
-                        XSSFClientAnchor anchor = pic.getPreferredSize();
-                        CTMarker ctMarker = anchor.getFrom();
-                        String picIndex = ctMarker.getRow() + "_" + ctMarker.getCol();
-                        sheetIndexPicMap.put(picIndex, pic.getPictureData());
-                    }
-                }
-            }
-        }
-        return sheetIndexPicMap;
     }
 
     /**
@@ -702,11 +556,15 @@ public class ExcelUtil<T> {
             // 得到导出对象.
             T vo = (T) list.get(i);
             Collection<?> subList = null;
-            if (isSubListValue(vo)) {
-                subList = getListCellValue(vo);
-                subMergedLastRowNum = subMergedLastRowNum + subList.size();
+            if (isSubList()) {
+                if (isSubListValue(vo)) {
+                    subList = getListCellValue(vo);
+                    subMergedLastRowNum = subMergedLastRowNum + subList.size();
+                } else {
+                    subMergedFirstRowNum++;
+                    subMergedLastRowNum++;
+                }
             }
-
             int column = 0;
             for (Object[] os : fields) {
                 Field field = (Field) os[0];
@@ -907,6 +765,16 @@ public class ExcelUtil<T> {
                         cell.getSheet().getWorkbook().addPicture(data, getImageType(data)));
             }
         }
+    }
+
+    /**
+     * 获取画布
+     */
+    public static Drawing<?> getDrawingPatriarch(Sheet sheet) {
+        if (sheet.getDrawingPatriarch() == null) {
+            sheet.createDrawingPatriarch();
+        }
+        return sheet.getDrawingPatriarch();
     }
 
     /**
@@ -1414,6 +1282,60 @@ public class ExcelUtil<T> {
             }
         }
         return true;
+    }
+
+    /**
+     * 获取Excel2003图片
+     *
+     * @param sheet    当前sheet对象
+     * @param workbook 工作簿对象
+     * @return Map key:图片单元格索引（1_1）String，value:图片流PictureData
+     */
+    public static Map<String, PictureData> getSheetPictures03(HSSFSheet sheet, HSSFWorkbook workbook) {
+        Map<String, PictureData> sheetIndexPicMap = new HashMap<String, PictureData>();
+        List<HSSFPictureData> pictures = workbook.getAllPictures();
+        if (!pictures.isEmpty()) {
+            for (HSSFShape shape : sheet.getDrawingPatriarch().getChildren()) {
+                HSSFClientAnchor anchor = (HSSFClientAnchor) shape.getAnchor();
+                if (shape instanceof HSSFPicture) {
+                    HSSFPicture pic = (HSSFPicture) shape;
+                    int pictureIndex = pic.getPictureIndex() - 1;
+                    HSSFPictureData picData = pictures.get(pictureIndex);
+                    String picIndex = String.valueOf(anchor.getRow1()) + "_" + String.valueOf(anchor.getCol1());
+                    sheetIndexPicMap.put(picIndex, picData);
+                }
+            }
+            return sheetIndexPicMap;
+        } else {
+            return sheetIndexPicMap;
+        }
+    }
+
+    /**
+     * 获取Excel2007图片
+     *
+     * @param sheet    当前sheet对象
+     * @param workbook 工作簿对象
+     * @return Map key:图片单元格索引（1_1）String，value:图片流PictureData
+     */
+    public static Map<String, PictureData> getSheetPictures07(XSSFSheet sheet, XSSFWorkbook workbook) {
+        Map<String, PictureData> sheetIndexPicMap = new HashMap<String, PictureData>();
+        for (POIXMLDocumentPart dr : sheet.getRelations()) {
+            if (dr instanceof XSSFDrawing) {
+                XSSFDrawing drawing = (XSSFDrawing) dr;
+                List<XSSFShape> shapes = drawing.getShapes();
+                for (XSSFShape shape : shapes) {
+                    if (shape instanceof XSSFPicture) {
+                        XSSFPicture pic = (XSSFPicture) shape;
+                        XSSFClientAnchor anchor = pic.getPreferredSize();
+                        CTMarker ctMarker = anchor.getFrom();
+                        String picIndex = ctMarker.getRow() + "_" + ctMarker.getCol();
+                        sheetIndexPicMap.put(picIndex, pic.getPictureData());
+                    }
+                }
+            }
+        }
+        return sheetIndexPicMap;
     }
 
     /**
