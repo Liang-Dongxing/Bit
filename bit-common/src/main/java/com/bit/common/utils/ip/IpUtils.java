@@ -1,8 +1,8 @@
 package com.bit.common.utils.ip;
 
 import com.bit.common.utils.StringUtils;
+import jakarta.servlet.http.HttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 

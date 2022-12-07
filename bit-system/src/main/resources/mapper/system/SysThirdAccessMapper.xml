@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit.system.mapper.SysThirdAccessMapper">
-
     <resultMap type="SysThirdAccess" id="SysThirdAccessResult">
         <result property="accessId" column="access_id"/>
         <result property="accessKeySecret" column="access_key_secret"/>
@@ -30,8 +29,12 @@
     <select id="selectSysThirdAccessList" parameterType="SysThirdAccess" resultMap="SysThirdAccessResult">
         <include refid="selectSysThirdAccessVo"/>
         <where>
-            <if test="accessKeyId != null  and accessKeyId != ''">and access_key_id = #{accessKeyId}</if>
-            <if test="accessKeyType != null  and accessKeyType != ''">and access_key_type = #{accessKeyType}</if>
+            <if test="accessKeyId != null  and accessKeyId != ''">
+                and access_key_id = #{accessKeyId}
+            </if>
+            <if test="accessKeyType != null  and accessKeyType != ''">
+                and access_key_type = #{accessKeyType}
+            </if>
         </where>
     </select>
 
@@ -43,35 +46,77 @@
     <insert id="insertSysThirdAccess" parameterType="SysThirdAccess" useGeneratedKeys="true" keyProperty="accessId">
         insert into sys_third_access
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="accessKeySecret != null and accessKeySecret != ''">access_key_secret,</if>
-            <if test="accessKeyId != null and accessKeyId != ''">access_key_id,</if>
-            <if test="accessKeyType != null and accessKeyType != ''">access_key_type,</if>
-            <if test="createBy != null">create_by,</if>
-            <if test="createTime != null">create_time,</if>
-            <if test="updateBy != null">update_by,</if>
-            <if test="updateTime != null">update_time,</if>
+            <if test="accessKeySecret != null and accessKeySecret != ''">
+                access_key_secret,
+            </if>
+            <if test="accessKeyId != null and accessKeyId != ''">
+                access_key_id,
+            </if>
+            <if test="accessKeyType != null and accessKeyType != ''">
+                access_key_type,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="accessKeySecret != null and accessKeySecret != ''">#{accessKeySecret},</if>
-            <if test="accessKeyId != null and accessKeyId != ''">#{accessKeyId},</if>
-            <if test="accessKeyType != null and accessKeyType != ''">#{accessKeyType},</if>
-            <if test="createBy != null">#{createBy},</if>
-            <if test="createTime != null">#{createTime},</if>
-            <if test="updateBy != null">#{updateBy},</if>
-            <if test="updateTime != null">#{updateTime},</if>
+            <if test="accessKeySecret != null and accessKeySecret != ''">
+                #{accessKeySecret},
+            </if>
+            <if test="accessKeyId != null and accessKeyId != ''">
+                #{accessKeyId},
+            </if>
+            <if test="accessKeyType != null and accessKeyType != ''">
+                #{accessKeyType},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
         </trim>
     </insert>
 
     <update id="updateSysThirdAccess" parameterType="SysThirdAccess">
         update sys_third_access
         <trim prefix="SET" suffixOverrides=",">
-            <if test="accessKeySecret != null and accessKeySecret != ''">access_key_secret = #{accessKeySecret},</if>
-            <if test="accessKeyId != null and accessKeyId != ''">access_key_id = #{accessKeyId},</if>
-            <if test="accessKeyType != null and accessKeyType != ''">access_key_type = #{accessKeyType},</if>
-            <if test="createBy != null">create_by = #{createBy},</if>
-            <if test="createTime != null">create_time = #{createTime},</if>
-            <if test="updateBy != null">update_by = #{updateBy},</if>
-            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="accessKeySecret != null and accessKeySecret != ''">
+                access_key_secret = #{accessKeySecret},
+            </if>
+            <if test="accessKeyId != null and accessKeyId != ''">
+                access_key_id = #{accessKeyId},
+            </if>
+            <if test="accessKeyType != null and accessKeyType != ''">
+                access_key_type = #{accessKeyType},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
         </trim>
         where access_id = #{accessId}
     </update>

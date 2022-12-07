@@ -8,11 +8,11 @@ import com.bit.common.filter.RepeatedlyRequestWrapper;
 import com.bit.common.utils.StringUtils;
 import com.bit.common.utils.http.HttpHelper;
 import com.bit.framework.interceptor.RepeatSubmitInterceptor;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;

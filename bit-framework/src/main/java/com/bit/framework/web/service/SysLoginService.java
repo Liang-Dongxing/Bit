@@ -19,14 +19,13 @@ import com.bit.framework.manager.factory.AsyncFactory;
 import com.bit.framework.security.context.AuthenticationContextHolder;
 import com.bit.system.service.ISysConfigService;
 import com.bit.system.service.ISysUserService;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * 登录校验方法

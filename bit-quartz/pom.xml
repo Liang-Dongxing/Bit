@@ -11,9 +11,7 @@
 
     <artifactId>bit-quartz</artifactId>
 
-    <description>
-        quartz定时任务
-    </description>
+    <description>quartz定时任务</description>
 
     <dependencies>
 
@@ -48,6 +46,10 @@
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-alidns</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
         </dependency>
     </dependencies>
 

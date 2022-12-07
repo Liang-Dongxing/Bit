@@ -6,8 +6,7 @@ import com.bit.common.enums.UserStatus;
 import com.bit.common.exception.ServiceException;
 import com.bit.common.utils.StringUtils;
 import com.bit.system.service.ISysUserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,9 +18,9 @@ import org.springframework.stereotype.Service;
  *
  * @author bit
  */
+@Slf4j
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Autowired
     private ISysUserService userService;

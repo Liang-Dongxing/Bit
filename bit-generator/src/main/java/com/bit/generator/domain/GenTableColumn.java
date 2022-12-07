@@ -2,11 +2,10 @@ package com.bit.generator.domain;
 
 import com.bit.common.core.domain.BaseEntity;
 import com.bit.common.utils.StringUtils;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
 
 /**
  * 代码生成业务字段表 gen_table_column

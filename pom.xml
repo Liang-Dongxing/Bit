@@ -3,7 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
     <groupId>com.bit</groupId>
     <artifactId>bit</artifactId>
     <version>1.1.0</version>
@@ -16,24 +21,27 @@
         <bit.version>1.1.0</bit.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
-        <druid.version>1.2.14</druid.version>
         <bitwalker.version>1.21</bitwalker.version>
         <swagger.version>3.0.0</swagger.version>
         <kaptcha.version>2.3.2</kaptcha.version>
-        <mybatis-spring-boot.version>2.2.2</mybatis-spring-boot.version>
+        <easy-captcha.version>1.6.2</easy-captcha.version>
+        <mybatis.version>3.5.11</mybatis.version>
+        <mybatis-spring.version>3.0.0</mybatis-spring.version>
+        <mybatis-spring-boot.version>3.0.0</mybatis-spring-boot.version>
         <mybatis-plus-spring-boot.version>3.5.2</mybatis-plus-spring-boot.version>
-        <pagehelper.boot.version>1.4.5</pagehelper.boot.version>
-        <fastjson.version>2.0.16</fastjson.version>
-        <oshi.version>6.3.0</oshi.version>
+        <pagehelper.boot.version>1.4.6</pagehelper.boot.version>
+        <pagehelper.version>5.3.2</pagehelper.version>
+        <fastjson.version>2.0.19</fastjson.version>
+        <oshi.version>6.3.2</oshi.version>
         <commons.io.version>2.11.0</commons.io.version>
         <commons.fileupload.version>1.4</commons.fileupload.version>
-        <commons.collections.version>3.2.2</commons.collections.version>
-        <poi.version>4.1.2</poi.version>
+        <commons.collections.version>4.4</commons.collections.version>
+        <poi.version>5.2.2</poi.version>
         <velocity.version>2.3</velocity.version>
         <jwt.version>0.9.1</jwt.version>
-        <hutool.version>5.8.5</hutool.version>
+        <hutool.version>5.8.10</hutool.version>
         <lombok.version>1.18.24</lombok.version>
         <aliyun.sdk.core.version>4.6.0</aliyun.sdk.core.version>
         <aliyun.sdk.alidns.version>2.6.32</aliyun.sdk.alidns.version>
@@ -42,22 +50,6 @@
     <!-- 依赖声明 -->
     <dependencyManagement>
         <dependencies>
-
-            <!-- SpringBoot的依赖配置-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.7.2</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- 阿里数据库连接池 -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.version}</version>
-            </dependency>
 
             <!-- 解析客户端操作系统、浏览器等 -->
             <dependency>
@@ -72,6 +64,16 @@
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis-spring-boot.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
 
             <!-- SpringBoot集成mybatis-plus框架 -->
             <dependency>
@@ -85,6 +87,12 @@
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${pagehelper.version}</version>
             </dependency>
 
             <!-- 获取系统信息 -->
@@ -137,8 +145,8 @@
 
             <!-- collections工具类 -->
             <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
                 <version>${commons.collections.version}</version>
             </dependency>
 
@@ -272,6 +280,15 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
+
+        <repository>
+            <id>huaweicloud</id>
+            <name>huaweicloud nexus</name>
+            <url>https://repo.huaweicloud.com/repository/maven</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -279,6 +296,18 @@
             <id>public</id>
             <name>aliyun nexus</name>
             <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+
+        <pluginRepository>
+            <id>huaweicloud</id>
+            <name>huaweicloud nexus</name>
+            <url>https://repo.huaweicloud.com/repository/maven</url>
             <releases>
                 <enabled>true</enabled>
             </releases>

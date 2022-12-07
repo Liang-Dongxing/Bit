@@ -6,16 +6,15 @@ import com.bit.common.config.BitConfig;
 import com.bit.common.constant.Constants;
 import com.bit.common.utils.StringUtils;
 import com.bit.common.utils.http.HttpUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 获取地址类
  *
  * @author bit
  */
+@Slf4j
 public class AddressUtils {
-    private static final Logger log = LoggerFactory.getLogger(AddressUtils.class);
 
     // IP地址查询
     public static final String IP_URL = "http://whois.pconline.com.cn/ipJson.jsp";

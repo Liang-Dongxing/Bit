@@ -13,8 +13,6 @@ import com.bit.common.utils.StringUtils;
 import com.bit.common.utils.sql.SqlUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -28,7 +26,6 @@ import java.util.List;
  * @author bit
  */
 public class BaseController {
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型
@@ -106,8 +103,7 @@ public class BaseController {
     /**
      * 返回成功消息
      */
-    public AjaxResult success(Object data)
-    {
+    public AjaxResult success(Object data) {
         return AjaxResult.success(data);
     }
 
@@ -121,8 +117,7 @@ public class BaseController {
     /**
      * 返回警告消息
      */
-    public AjaxResult warn(String message)
-    {
+    public AjaxResult warn(String message) {
         return AjaxResult.warn(message);
     }
 

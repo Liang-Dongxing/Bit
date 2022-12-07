@@ -2,12 +2,11 @@ package com.bit.system.domain;
 
 import com.bit.common.core.domain.BaseEntity;
 import com.bit.common.xss.Xss;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 /**
  * 通知公告表 sys_notice

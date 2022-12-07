@@ -1,5 +1,6 @@
 package com.bit.web.controller.system;
 
+import com.bit.common.annotation.Anonymous;
 import com.bit.common.annotation.Log;
 import com.bit.common.core.controller.BaseController;
 import com.bit.common.core.domain.AjaxResult;
@@ -10,12 +11,12 @@ import com.bit.common.utils.StringUtils;
 import com.bit.common.utils.poi.ExcelUtil;
 import com.bit.system.service.ISysDictDataService;
 import com.bit.system.service.ISysDictTypeService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,19 @@ public class SysDictDataController extends BaseController {
 
     @Autowired
     private ISysDictTypeService dictTypeService;
+
+    /**
+     * 根据字典类型查询字典数据信息
+     */
+    @GetMapping(value = "/type/{dictType}")
+    @Anonymous
+    public AjaxResult dictType(@PathVariable String dictType) {
+        List<SysDictData> data = dictTypeService.selectDictDataByType(dictType);
+        if (StringUtils.isNull(data)) {
+            data = new ArrayList<SysDictData>();
+        }
+        return success(data);
+    }
 
     @PreAuthorize("@ss.hasPermi('system:dict:list')")
     @GetMapping("/list")
@@ -57,18 +71,6 @@ public class SysDictDataController extends BaseController {
     @GetMapping(value = "/{dictCode}")
     public AjaxResult getInfo(@PathVariable Long dictCode) {
         return success(dictDataService.selectDictDataById(dictCode));
-    }
-
-    /**
-     * 根据字典类型查询字典数据信息
-     */
-    @GetMapping(value = "/type/{dictType}")
-    public AjaxResult dictType(@PathVariable String dictType) {
-        List<SysDictData> data = dictTypeService.selectDictDataByType(dictType);
-        if (StringUtils.isNull(data)) {
-            data = new ArrayList<SysDictData>();
-        }
-        return success(data);
     }
 
     /**

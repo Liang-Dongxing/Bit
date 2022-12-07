@@ -68,7 +68,7 @@ public interface ISysUserService {
 
     /**
      * 校验用户名称是否唯一
-     * 
+     *
      * @param user 用户信息
      * @return 结果
      */

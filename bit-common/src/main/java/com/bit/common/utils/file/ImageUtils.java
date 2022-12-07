@@ -3,9 +3,8 @@ package com.bit.common.utils.file;
 import com.bit.common.config.BitConfig;
 import com.bit.common.constant.Constants;
 import com.bit.common.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.util.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -19,8 +18,8 @@ import java.util.Arrays;
  *
  * @author bit
  */
+@Slf4j
 public class ImageUtils {
-    private static final Logger log = LoggerFactory.getLogger(ImageUtils.class);
 
     public static byte[] getImage(String imagePath) {
         InputStream is = getFile(imagePath);

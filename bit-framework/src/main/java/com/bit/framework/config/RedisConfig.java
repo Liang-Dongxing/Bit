@@ -1,13 +1,19 @@
 package com.bit.framework.config;
 
-import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.annotation.EnableCaching;
+import com.alibaba.fastjson2.JSON;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.cache.annotation.CachingConfigurer;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * redis配置
@@ -15,26 +21,49 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author bit
  */
 @Configuration
-@EnableCaching
-public class RedisConfig extends CachingConfigurerSupport {
+public class RedisConfig implements CachingConfigurer {
     @Bean
     @SuppressWarnings(value = {"unchecked", "rawtypes"})
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
+        RedisSerializer stringSerializer = new StringRedisSerializer();//序列化为String
 
         FastJson2JsonRedisSerializer serializer = new FastJson2JsonRedisSerializer(Object.class);
 
         // 使用StringRedisSerializer来序列化和反序列化redis的key值
-        template.setKeySerializer(new StringRedisSerializer());
+        template.setKeySerializer(stringSerializer);
         template.setValueSerializer(serializer);
 
         // Hash的key也采用StringRedisSerializer的序列化方式
-        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(stringSerializer);
         template.setHashValueSerializer(serializer);
 
         template.afterPropertiesSet();
         return template;
+    }
+
+    @Bean
+    @Override
+    public KeyGenerator keyGenerator() {
+        return (target, method, params) -> {
+            Map<String, Object> container = new HashMap<>(3);
+            Class<?> targetClassClass = target.getClass();
+            // 类地址
+            container.put("class", targetClassClass.toGenericString());
+            // 方法名称
+            container.put("methodName", method.getName());
+            // 包名称
+            container.put("package", targetClassClass.getPackage());
+            // 参数列表
+            for (int i = 0; i < params.length; i++) {
+                container.put(String.valueOf(i), params[i]);
+            }
+            // 转为JSON字符串
+            String jsonString = JSON.toJSONString(container);
+            // 做SHA256 Hash计算，得到一个SHA256摘要作为Key
+            return DigestUtils.sha256Hex(jsonString);
+        };
     }
 
     @Bean

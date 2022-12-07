@@ -4,12 +4,11 @@ import com.bit.common.annotation.Excel;
 import com.bit.common.annotation.Excel.ColumnType;
 import com.bit.common.constant.UserConstants;
 import com.bit.common.core.domain.BaseEntity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 /**
  * 字典数据表 sys_dict_data

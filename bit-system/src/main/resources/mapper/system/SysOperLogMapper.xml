@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit.system.mapper.SysOperLogMapper">
-
     <resultMap type="SysOperLog" id="SysOperLogResult">
         <id property="operId" column="oper_id"/>
         <result property="title" column="title"/>
@@ -45,10 +44,10 @@
 
     <insert id="insertOperlog" parameterType="SysOperLog">
         insert into sys_oper_log(title, business_type, method, request_method, operator_type, oper_name, dept_name,
-                                 oper_url, oper_ip, oper_location, oper_param, json_result, status, error_msg,
-                                 oper_time)
+        oper_url, oper_ip, oper_location, oper_param, json_result, status, error_msg,
+        oper_time)
         values (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operatorType}, #{operName}, #{deptName},
-                #{operUrl}, #{operIp}, #{operLocation}, #{operParam}, #{jsonResult}, #{status}, #{errorMsg}, sysdate())
+        #{operUrl}, #{operIp}, #{operLocation}, #{operParam}, #{jsonResult}, #{status}, #{errorMsg}, sysdate())
     </insert>
 
     <select id="selectOperLogList" parameterType="SysOperLog" resultMap="SysOperLogResult">
@@ -72,10 +71,12 @@
             <if test="operName != null and operName != ''">
                 AND oper_name like concat('%', #{operName}, '%')
             </if>
-            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            <if test="params.beginTime != null and params.beginTime != ''">
+                <!-- 开始时间检索 -->
                 and date_format(oper_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
-            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            <if test="params.endTime != null and params.endTime != ''">
+                <!-- 结束时间检索 -->
                 and date_format(oper_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
@@ -97,5 +98,4 @@
     <update id="cleanOperLog">
         truncate table sys_oper_log
     </update>
-
-</mapper> 
+</mapper>

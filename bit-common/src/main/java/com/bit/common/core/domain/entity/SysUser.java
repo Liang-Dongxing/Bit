@@ -6,13 +6,13 @@ import com.bit.common.annotation.Excel.Type;
 import com.bit.common.annotation.Excels;
 import com.bit.common.core.domain.BaseEntity;
 import com.bit.common.xss.Xss;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 

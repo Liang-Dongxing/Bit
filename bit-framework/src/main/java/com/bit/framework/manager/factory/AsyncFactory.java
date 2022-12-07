@@ -12,8 +12,8 @@ import com.bit.system.domain.SysOperLog;
 import com.bit.system.service.ISysLogininforService;
 import com.bit.system.service.ISysOperLogService;
 import eu.bitwalker.useragentutils.UserAgent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.TimerTask;
 
@@ -22,8 +22,8 @@ import java.util.TimerTask;
  *
  * @author bit
  */
+@Slf4j
 public class AsyncFactory {
-    private static final Logger sys_user_logger = LoggerFactory.getLogger("sys-user");
 
     /**
      * 记录登录信息
@@ -34,10 +34,22 @@ public class AsyncFactory {
      * @param args     列表
      * @return 任务task
      */
-    public static TimerTask recordLogininfor(final String username, final String status, final String message,
-                                             final Object... args) {
-        final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
-        final String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
+    public static TimerTask recordLogininfor(final String username, final String status, final String message, final Object... args) {
+        return recordLogininfor(ServletUtils.getRequest(), username, status, message, args);
+    }
+
+    /**
+     * 记录登录信息
+     *
+     * @param username 用户名
+     * @param status   状态
+     * @param message  消息
+     * @param args     列表
+     * @return 任务task
+     */
+    public static TimerTask recordLogininfor(final HttpServletRequest request, final String username, final String status, final String message, final Object... args) {
+        final UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+        final String ip = IpUtils.getIpAddr(request);
         return new TimerTask() {
             @Override
             public void run() {
@@ -49,7 +61,7 @@ public class AsyncFactory {
                 s.append(LogUtils.getBlock(status));
                 s.append(LogUtils.getBlock(message));
                 // 打印信息到日志
-                sys_user_logger.info(s.toString(), args);
+                log.info(s.toString(), args);
                 // 获取客户端操作系统
                 String os = userAgent.getOperatingSystem().getName();
                 // 获取客户端浏览器

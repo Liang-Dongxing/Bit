@@ -10,13 +10,13 @@ import com.bit.generator.domain.GenTable;
 import com.bit.generator.domain.GenTableColumn;
 import com.bit.generator.service.IGenTableColumnService;
 import com.bit.generator.service.IGenTableService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;

@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit.system.mapper.SysLogininforMapper">
-
     <resultMap type="SysLogininfor" id="SysLogininforResult">
         <id property="infoId" column="info_id"/>
         <result property="userName" column="user_name"/>
@@ -33,10 +32,12 @@
             <if test="userName != null and userName != ''">
                 AND user_name like concat('%', #{userName}, '%')
             </if>
-            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            <if test="params.beginTime != null and params.beginTime != ''">
+                <!-- 开始时间检索 -->
                 and date_format(login_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
-            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            <if test="params.endTime != null and params.endTime != ''">
+                <!-- 结束时间检索 -->
                 and date_format(login_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
@@ -53,5 +54,4 @@
     <update id="cleanLogininfor">
         truncate table sys_logininfor
     </update>
-
-</mapper> 
+</mapper>

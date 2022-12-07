@@ -2,10 +2,12 @@ package com.bit.framework.config;
 
 import com.bit.common.config.BitConfig;
 import com.bit.common.constant.Constants;
+import com.bit.framework.config.converter.StringToStringGenericConverter;
 import com.bit.framework.interceptor.RepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.support.GenericConversionService;
 import org.springframework.http.CacheControl;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -35,7 +37,8 @@ public class ResourcesConfig implements WebMvcConfigurer {
         /** swagger配置 */
         registry.addResourceHandler("/swagger-ui/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
-                .setCacheControl(CacheControl.maxAge(5, TimeUnit.HOURS).cachePublic());;
+                .setCacheControl(CacheControl.maxAge(5, TimeUnit.HOURS).cachePublic());
+        ;
     }
 
     /**
@@ -66,5 +69,11 @@ public class ResourcesConfig implements WebMvcConfigurer {
         source.registerCorsConfiguration("/**", config);
         // 返回新的CorsFilter
         return new CorsFilter(source);
+    }
+
+    @Bean
+    public GenericConversionService getDefaultConversionService(@Autowired GenericConversionService genericConversionService) {
+        genericConversionService.addConverter(new StringToStringGenericConverter());
+        return genericConversionService;
     }
 }

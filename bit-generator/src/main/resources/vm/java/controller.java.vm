@@ -1,7 +1,8 @@
 package ${packageName}.controller;
 
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +49,12 @@ public class ${ClassName}Controller extends BaseController {
         List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
         return getDataTable(list);
     }
-#elseif($table.tree)
-    public AjaxResult list(${ClassName} ${className}) {
-        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-        return success(list);
-    }
-#end
+    #elseif($table.tree)
+        public AjaxResult list(${ClassName} ${className}) {
+            List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
+            return success(list);
+        }
+    #end
 
     /**
      * 导出${functionName}列表

@@ -11,11 +11,18 @@
 
     <artifactId>bit-system</artifactId>
 
-    <description>
-        system系统模块
-    </description>
+    <description>system系统模块</description>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+        </dependency>
 
         <!-- 通用工具-->
         <dependency>

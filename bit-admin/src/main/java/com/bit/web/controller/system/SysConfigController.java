@@ -9,12 +9,12 @@ import com.bit.common.enums.BusinessType;
 import com.bit.common.utils.poi.ExcelUtil;
 import com.bit.system.domain.SysConfig;
 import com.bit.system.service.ISysConfigService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -72,8 +72,7 @@ public class SysConfigController extends BaseController {
     @Log(title = "参数管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysConfig config) {
-        if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config)))
-        {
+        if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config))) {
             return error("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
         config.setCreateBy(getUsername());

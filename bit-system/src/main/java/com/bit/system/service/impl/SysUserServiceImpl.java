@@ -15,14 +15,13 @@ import com.bit.system.domain.SysUserRole;
 import com.bit.system.mapper.*;
 import com.bit.system.service.ISysConfigService;
 import com.bit.system.service.ISysUserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jakarta.validation.Validator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,9 +31,9 @@ import java.util.stream.Collectors;
  *
  * @author bit
  */
+@Slf4j
 @Service
 public class SysUserServiceImpl implements ISysUserService {
-    private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
     @Autowired
     private SysUserMapper userMapper;
@@ -147,17 +146,15 @@ public class SysUserServiceImpl implements ISysUserService {
 
     /**
      * 校验用户名称是否唯一
-     * 
+     *
      * @param userName 用户名称
      * @return 结果
      */
     @Override
-    public String checkUserNameUnique(SysUser user)
-    {
+    public String checkUserNameUnique(SysUser user) {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
         SysUser info = userMapper.checkUserNameUnique(user.getUserName());
-        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue())
-        {
+        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;

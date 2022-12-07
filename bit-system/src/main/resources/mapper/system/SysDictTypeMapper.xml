@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit.system.mapper.SysDictTypeMapper">
-
     <resultMap type="SysDictType" id="SysDictTypeResult">
         <id property="dictId" column="dict_id"/>
         <result property="dictName" column="dict_name"/>
@@ -32,10 +31,12 @@
             <if test="dictType != null and dictType != ''">
                 AND dict_type like concat('%', #{dictType}, '%')
             </if>
-            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            <if test="params.beginTime != null and params.beginTime != ''">
+                <!-- 开始时间检索 -->
                 and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
-            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            <if test="params.endTime != null and params.endTime != ''">
+                <!-- 结束时间检索 -->
                 and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
@@ -76,11 +77,21 @@
     <update id="updateDictType" parameterType="SysDictType">
         update sys_dict_type
         <set>
-            <if test="dictName != null and dictName != ''">dict_name = #{dictName},</if>
-            <if test="dictType != null and dictType != ''">dict_type = #{dictType},</if>
-            <if test="status != null">status = #{status},</if>
-            <if test="remark != null">remark = #{remark},</if>
-            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="dictName != null and dictName != ''">
+                dict_name = #{dictName},
+            </if>
+            <if test="dictType != null and dictType != ''">
+                dict_type = #{dictType},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
             update_time = sysdate()
         </set>
         where dict_id = #{dictId}
@@ -88,20 +99,39 @@
 
     <insert id="insertDictType" parameterType="SysDictType">
         insert into sys_dict_type(
-        <if test="dictName != null and dictName != ''">dict_name,</if>
-        <if test="dictType != null and dictType != ''">dict_type,</if>
-        <if test="status != null">status,</if>
-        <if test="remark != null and remark != ''">remark,</if>
-        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="dictName != null and dictName != ''">
+            dict_name,
+        </if>
+        <if test="dictType != null and dictType != ''">
+            dict_type,
+        </if>
+        <if test="status != null">
+            status,
+        </if>
+        <if test="remark != null and remark != ''">
+            remark,
+        </if>
+        <if test="createBy != null and createBy != ''">
+            create_by,
+        </if>
         create_time
         )values(
-        <if test="dictName != null and dictName != ''">#{dictName},</if>
-        <if test="dictType != null and dictType != ''">#{dictType},</if>
-        <if test="status != null">#{status},</if>
-        <if test="remark != null and remark != ''">#{remark},</if>
-        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="dictName != null and dictName != ''">
+            #{dictName},
+        </if>
+        <if test="dictType != null and dictType != ''">
+            #{dictType},
+        </if>
+        <if test="status != null">
+            #{status},
+        </if>
+        <if test="remark != null and remark != ''">
+            #{remark},
+        </if>
+        <if test="createBy != null and createBy != ''">
+            #{createBy},
+        </if>
         sysdate()
         )
     </insert>
-
-</mapper> 
+</mapper>

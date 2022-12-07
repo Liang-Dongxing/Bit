@@ -9,11 +9,11 @@ import com.bit.common.utils.StringUtils;
 import com.bit.system.mapper.SysDictDataMapper;
 import com.bit.system.mapper.SysDictTypeMapper;
 import com.bit.system.service.ISysDictTypeService;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;

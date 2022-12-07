@@ -6,12 +6,11 @@ import com.bit.common.exception.ServiceException;
 import com.bit.common.utils.ServletUtils;
 import com.bit.common.utils.StringUtils;
 import com.bit.common.utils.ip.IpUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
@@ -26,10 +25,10 @@ import java.util.List;
  *
  * @author bit
  */
+@Slf4j
 @Aspect
 @Component
 public class RateLimiterAspect {
-    private static final Logger log = LoggerFactory.getLogger(RateLimiterAspect.class);
 
     private RedisTemplate<Object, Object> redisTemplate;
 
@@ -46,8 +45,7 @@ public class RateLimiterAspect {
     }
 
     @Before("@annotation(rateLimiter)")
-    public void doBefore(JoinPoint point, RateLimiter rateLimiter) throws Throwable
-    {
+    public void doBefore(JoinPoint point, RateLimiter rateLimiter) throws Throwable {
         int time = rateLimiter.time();
         int count = rateLimiter.count();
 
@@ -59,9 +57,7 @@ public class RateLimiterAspect {
                 throw new ServiceException("访问过于频繁，请稍候再试");
             }
             log.info("限制请求'{}',当前请求'{}',缓存key'{}'", count, number.intValue(), combineKey);
-        }
-        catch (ServiceException e)
-        {
+        } catch (ServiceException e) {
             throw e;
         } catch (Exception e) {
             throw new RuntimeException("服务器限流异常，请稍候再试");
