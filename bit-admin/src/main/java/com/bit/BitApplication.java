@@ -1,5 +1,6 @@
 package com.bit;
 
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,10 +23,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 // 指定要扫描的Mapper类的包的路径
 @MapperScan("com.bit.**.mapper")
+@Slf4j
 public class BitApplication {
     public static void main(String[] args) {
         // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(BitApplication.class, args);
-        System.out.println("(♥◠‿◠)ﾉﾞ  Bit 启动成功   ლ(´ڡ`ლ)ﾞ");
+        log.info("(♥◠‿◠)ﾉﾞ  Bit 启动成功   ლ(´ڡ`ლ)ﾞ");
     }
 }

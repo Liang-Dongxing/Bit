@@ -43,6 +43,7 @@
         <jwt.version>0.9.1</jwt.version>
         <hutool.version>5.8.10</hutool.version>
         <lombok.version>1.18.24</lombok.version>
+        <jakarta.faces.version>4.0.1</jakarta.faces.version>
         <aliyun.sdk.core.version>4.6.0</aliyun.sdk.core.version>
         <aliyun.sdk.alidns.version>2.6.32</aliyun.sdk.alidns.version>
     </properties>
@@ -107,12 +108,6 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
                 <version>${swagger.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>io.swagger</groupId>
-                        <artifactId>swagger-models</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
             <!-- io常用工具类 -->
@@ -174,7 +169,7 @@
             <dependency>
                 <groupId>com.github.whvcse</groupId>
                 <artifactId>easy-captcha</artifactId>
-                <version>1.6.2</version>
+                <version>${easy-captcha.version}</version>
             </dependency>
 
             <!-- Hutool 工具类 -->
@@ -189,6 +184,13 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>jakarta.faces</groupId>
+                <artifactId>jakarta.faces-api</artifactId>
+                <version>${jakarta.faces.version}</version>
             </dependency>
 
             <!-- 阿里云 sdk -->
@@ -261,7 +263,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
