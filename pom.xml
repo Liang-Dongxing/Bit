@@ -25,7 +25,7 @@
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <bitwalker.version>1.21</bitwalker.version>
         <swagger.version>3.0.0</swagger.version>
-        <kaptcha.version>2.3.2</kaptcha.version>
+        <kaptcha.version>2.3.3</kaptcha.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <mybatis.version>3.5.11</mybatis.version>
         <mybatis-spring.version>3.0.0</mybatis-spring.version>
@@ -33,7 +33,7 @@
         <mybatis-plus-spring-boot.version>3.5.2</mybatis-plus-spring-boot.version>
         <pagehelper.boot.version>1.4.6</pagehelper.boot.version>
         <pagehelper.version>5.3.2</pagehelper.version>
-        <fastjson.version>2.0.19</fastjson.version>
+        <fastjson.version>2.0.20</fastjson.version>
         <oshi.version>6.3.2</oshi.version>
         <commons.io.version>2.11.0</commons.io.version>
         <commons.fileupload.version>1.4</commons.fileupload.version>
@@ -166,7 +166,7 @@
 
             <!-- 验证码 -->
             <dependency>
-                <groupId>com.github.penggle</groupId>
+                <groupId>pro.fessional</groupId>
                 <artifactId>kaptcha</artifactId>
                 <version>${kaptcha.version}</version>
             </dependency>
