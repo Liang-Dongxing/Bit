@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.support.GenericConversionService;
-import org.springframework.http.CacheControl;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -16,7 +17,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.concurrent.TimeUnit;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * 通用配置
@@ -31,14 +33,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         /** 本地文件上传路径 */
-        registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**")
-                .addResourceLocations("file:" + BitConfig.getProfile() + "/");
-
-        /** swagger配置 */
-        registry.addResourceHandler("/swagger-ui/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
-                .setCacheControl(CacheControl.maxAge(5, TimeUnit.HOURS).cachePublic());
-        ;
+        registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**").addResourceLocations("file:" + BitConfig.getProfile() + "/");
     }
 
     /**
@@ -47,6 +42,20 @@ public class ResourcesConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
+    }
+
+    @Override
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        List<StringHttpMessageConverter> stringHttpMessageConverters = converters.stream()
+                .filter(converter -> converter.getClass().equals(StringHttpMessageConverter.class))
+                .map(converter -> (StringHttpMessageConverter) converter)
+                .toList();
+
+        if (stringHttpMessageConverters.isEmpty()) {
+            converters.add(responseBodyStringConverter());
+        } else {
+            stringHttpMessageConverters.forEach(converter -> converter.setDefaultCharset(StandardCharsets.UTF_8));
+        }
     }
 
     /**
@@ -75,5 +84,11 @@ public class ResourcesConfig implements WebMvcConfigurer {
     public GenericConversionService getDefaultConversionService(@Autowired GenericConversionService genericConversionService) {
         genericConversionService.addConverter(new StringToStringGenericConverter());
         return genericConversionService;
+    }
+
+    @Bean
+    public HttpMessageConverter<String> responseBodyStringConverter() {
+        StringHttpMessageConverter converter = new StringHttpMessageConverter(StandardCharsets.UTF_8);
+        return converter;
     }
 }
