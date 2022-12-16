@@ -96,7 +96,14 @@ public class SecurityConfig {
                 // 对于登录login 注册register 验证码captchaImage 允许匿名访问
                 .requestMatchers("/login", "/register", "/*/captchaImage").permitAll()
                 // 静态资源，可匿名访问
-                .requestMatchers(HttpMethod.GET, "/", "/*.html", "/*/*.html", "/*/*.css", "/*/*.js", "/profile/*").permitAll()
+                .requestMatchers(HttpMethod.GET, "/").permitAll()
+                .requestMatchers(
+                        new AntPathRequestMatcher("/**/*.html"),
+                        new AntPathRequestMatcher("/**/*.css"),
+                        new AntPathRequestMatcher("/**/*.js"),
+                        new AntPathRequestMatcher("/profile/**")
+                ).permitAll()
+                // swagger 请求路径，可匿名访问
                 .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**"), new AntPathRequestMatcher("/*/api-docs/**")).permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated().and().headers().frameOptions().disable();

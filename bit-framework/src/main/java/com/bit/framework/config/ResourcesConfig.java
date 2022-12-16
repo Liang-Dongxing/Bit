@@ -6,6 +6,7 @@ import com.bit.framework.config.converter.StringToStringGenericConverter;
 import com.bit.framework.interceptor.RepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.support.GenericConversionService;
@@ -32,6 +33,8 @@ public class ResourcesConfig implements WebMvcConfigurer {
     @Autowired
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
 
+    @Autowired
+    private WebProperties webProperties;
     @Value("${server.servlet.encoding.charset}")
     private Charset charset;
 
@@ -39,6 +42,9 @@ public class ResourcesConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         /* 本地文件上传路径 */
         registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**").addResourceLocations("file:" + BitConfig.getProfile() + "/");
+
+        //配置静态资源处理
+        registry.addResourceHandler("/**").addResourceLocations(webProperties.getResources().getStaticLocations());
     }
 
     /**
