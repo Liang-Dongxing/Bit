@@ -1,22 +1,19 @@
 package com.bit.web.core.config;
 
 import com.bit.common.config.BitConfig;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.*;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spi.service.contexts.SecurityContext;
-import springfox.documentation.spring.web.plugins.Docket;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Swagger2的接口配置
@@ -31,91 +28,46 @@ public class SwaggerConfig {
     @Autowired
     private BitConfig BitConfig;
 
-    /**
-     * 是否开启swagger
-     */
-    @Value("${swagger.enabled}")
-    private boolean enabled;
+    @Value("${token.header}")
+    private String header;
 
-    /**
-     * 设置请求的统一前缀
-     */
-    @Value("${swagger.pathMapping}")
-    private String pathMapping;
-
-    /**
-     * 创建API
-     */
     @Bean
-    public Docket createRestApi() {
-        return new Docket(DocumentationType.OAS_30)
-                // 是否启用Swagger
-                .enable(enabled)
-                // 用来创建该API的基本信息，展示在文档的页面中（自定义展示的信息）
-                .apiInfo(apiInfo())
-                // 设置哪些接口暴露给Swagger展示
-                .select()
+    public OpenAPI openAPI() {
+        OpenAPI openAPI = new OpenAPI();
+        openAPI.info(apiInfo());
+        Components components = new Components();
+        /* 设置安全模式，swagger可以设置访问token */
+        SecurityScheme securityScheme = new SecurityScheme().type(SecurityScheme.Type.APIKEY).in(SecurityScheme.In.HEADER).name(header);
+        components.addSecuritySchemes(header, securityScheme);
+        openAPI.components(components);
+        openAPI.addSecurityItem(new SecurityRequirement().addList(header));
+        return openAPI;
+    }
+
+    @Bean
+    public GroupedOpenApi defaultApi() {
+        return GroupedOpenApi.builder()
+                .group("default")
+                .pathsToMatch("/**")
                 // 扫描所有有注解的api，用这种方式更灵活
-                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-                // 扫描指定包中的swagger注解
-                // .apis(RequestHandlerSelectors.basePackage("com.bit.project.tool.swagger"))
-                // 扫描所有 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build()
-                /* 设置安全模式，swagger可以设置访问token */
-                .securitySchemes(securitySchemes())
-                .securityContexts(securityContexts())
-                .pathMapping(pathMapping);
-    }
-
-    /**
-     * 安全模式，这里指定token通过Authorization头请求头传递
-     */
-    private List<SecurityScheme> securitySchemes() {
-        List<SecurityScheme> apiKeyList = new ArrayList<SecurityScheme>();
-        apiKeyList.add(new ApiKey("Authorization", "Authorization", In.HEADER.toValue()));
-        return apiKeyList;
-    }
-
-    /**
-     * 安全上下文
-     */
-    private List<SecurityContext> securityContexts() {
-        List<SecurityContext> securityContexts = new ArrayList<>();
-        securityContexts.add(
-                SecurityContext.builder()
-                        .securityReferences(defaultAuth())
-                        .operationSelector(o -> o.requestMappingPattern().matches("/.*"))
-                        .build());
-        return securityContexts;
-    }
-
-    /**
-     * 默认的安全上引用
-     */
-    private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        List<SecurityReference> securityReferences = new ArrayList<>();
-        securityReferences.add(new SecurityReference("Authorization", authorizationScopes));
-        return securityReferences;
+                .addOpenApiMethodFilter(method -> method.isAnnotationPresent(Operation.class))
+                .build();
     }
 
     /**
      * 添加摘要信息
      */
-    private ApiInfo apiInfo() {
+    private Info apiInfo() {
         // 用ApiInfoBuilder进行定制
-        return new ApiInfoBuilder()
+        return new Info()
                 // 设置标题
                 .title("标题：Bit管理系统_接口文档")
                 // 描述
                 .description("描述：用于管理集团旗下公司的人员信息,具体包括XXX,XXX模块...")
                 // 作者信息
-                .contact(new Contact(BitConfig.getName(), null, null))
+                .contact(new Contact().name(BitConfig.getName()))
                 // 版本
                 .version("版本号:" + BitConfig.getVersion())
-                .build();
+                .license(new License().name("MIT").url("https://github.com/Liang-Dongxing/Bit.git"));
     }
 }

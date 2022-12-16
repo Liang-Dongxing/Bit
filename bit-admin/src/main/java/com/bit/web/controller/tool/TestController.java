@@ -3,7 +3,10 @@ package com.bit.web.controller.tool;
 import com.bit.common.core.controller.BaseController;
 import com.bit.common.core.domain.R;
 import com.bit.common.utils.StringUtils;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ import java.util.Map;
  *
  * @author bit
  */
-@Api("用户信息管理")
+@Tag(name = "用户信息管理")
 @RestController
 @RequestMapping("/test/user")
 public class TestController extends BaseController {
@@ -27,15 +30,15 @@ public class TestController extends BaseController {
         users.put(2, new UserEntity(2, "ry", "admin123", "15666666666"));
     }
 
-    @ApiOperation("获取用户列表")
+    @Operation(summary = "获取用户列表")
     @GetMapping("/list")
     public R<List<UserEntity>> userList() {
         List<UserEntity> userList = new ArrayList<UserEntity>(users.values());
         return R.ok(userList);
     }
 
-    @ApiOperation("获取用户详细")
-    @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path", dataTypeClass = Integer.class)
+    @Operation(summary = "获取用户详细")
+    @Parameter(name = "userId", description = "用户ID", required = true)
     @GetMapping("/{userId}")
     public R<UserEntity> getUser(@PathVariable Integer userId) {
         if (!users.isEmpty() && users.containsKey(userId)) {
@@ -45,15 +48,9 @@ public class TestController extends BaseController {
         }
     }
 
-    @ApiOperation("新增用户")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户id", dataType = "Integer", dataTypeClass = Integer.class),
-            @ApiImplicitParam(name = "username", value = "用户名称", dataType = "String", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "password", value = "用户密码", dataType = "String", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "mobile", value = "用户手机", dataType = "String", dataTypeClass = String.class)
-    })
+    @Operation(summary = "新增用户")
     @PostMapping("/save")
-    public R<String> save(UserEntity user) {
+    public R<String> save(@RequestBody UserEntity user) {
         if (StringUtils.isNull(user) || StringUtils.isNull(user.getUserId())) {
             return R.fail("用户ID不能为空");
         }
@@ -61,7 +58,7 @@ public class TestController extends BaseController {
         return R.ok();
     }
 
-    @ApiOperation("更新用户")
+    @Operation(summary = "更新用户")
     @PutMapping("/update")
     public R<String> update(@RequestBody UserEntity user) {
         if (StringUtils.isNull(user) || StringUtils.isNull(user.getUserId())) {
@@ -75,8 +72,8 @@ public class TestController extends BaseController {
         return R.ok();
     }
 
-    @ApiOperation("删除用户信息")
-    @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path", dataTypeClass = Integer.class)
+    @Operation(summary = "删除用户信息")
+    @Parameter(name = "userId", description = "用户ID", required = true)
     @DeleteMapping("/{userId}")
     public R<String> delete(@PathVariable Integer userId) {
         if (!users.isEmpty() && users.containsKey(userId)) {
@@ -88,18 +85,18 @@ public class TestController extends BaseController {
     }
 }
 
-@ApiModel(value = "UserEntity", description = "用户实体")
+@Schema(name = "UserEntity", description = "用户实体")
 class UserEntity {
-    @ApiModelProperty("用户ID")
+    @Schema(name = "userId", description = "用户ID")
     private Integer userId;
 
-    @ApiModelProperty("用户名称")
+    @Schema(name = "username", description = "用户名称")
     private String username;
 
-    @ApiModelProperty("用户密码")
+    @Schema(name = "password", description = "用户密码")
     private String password;
 
-    @ApiModelProperty("用户手机")
+    @Schema(name = "mobile", description = "用户手机")
     private String mobile;
 
     public UserEntity() {
