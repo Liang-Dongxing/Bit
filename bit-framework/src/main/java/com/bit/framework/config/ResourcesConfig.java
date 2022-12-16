@@ -5,6 +5,7 @@ import com.bit.common.constant.Constants;
 import com.bit.framework.config.converter.StringToStringGenericConverter;
 import com.bit.framework.interceptor.RepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.support.GenericConversionService;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -30,9 +32,12 @@ public class ResourcesConfig implements WebMvcConfigurer {
     @Autowired
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
 
+    @Value("${server.servlet.encoding.charset}")
+    private Charset charset;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        /** 本地文件上传路径 */
+        /* 本地文件上传路径 */
         registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**").addResourceLocations("file:" + BitConfig.getProfile() + "/");
     }
 
@@ -54,7 +59,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
         if (stringHttpMessageConverters.isEmpty()) {
             converters.add(responseBodyStringConverter());
         } else {
-            stringHttpMessageConverters.forEach(converter -> converter.setDefaultCharset(StandardCharsets.UTF_8));
+            stringHttpMessageConverters.forEach(converter -> converter.setDefaultCharset(charset));
         }
     }
 
@@ -88,7 +93,6 @@ public class ResourcesConfig implements WebMvcConfigurer {
 
     @Bean
     public HttpMessageConverter<String> responseBodyStringConverter() {
-        StringHttpMessageConverter converter = new StringHttpMessageConverter(StandardCharsets.UTF_8);
-        return converter;
+        return new StringHttpMessageConverter(StandardCharsets.UTF_8);
     }
 }
