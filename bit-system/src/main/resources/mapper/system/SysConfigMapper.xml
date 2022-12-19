@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bit.system.mapper.SysConfigMapper">
+<mapper namespace="com.ruoyi.system.mapper.SysConfigMapper">
     <resultMap type="SysConfig" id="SysConfigResult">
         <id property="configId" column="config_id"/>
         <result property="configName" column="config_name"/>
@@ -67,6 +67,11 @@
                 and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
+    </select>
+
+    <select id="selectConfigById" parameterType="Long" resultMap="SysConfigResult">
+        <include refid="selectConfigVo"/>
+        where config_id = #{configId}
     </select>
 
     <select id="checkConfigKeyUnique" parameterType="String" resultMap="SysConfigResult">
@@ -145,9 +150,7 @@
     </update>
 
     <delete id="deleteConfigById" parameterType="Long">
-        delete
-        from sys_config
-        where config_id = #{configId}
+        delete from sys_config where config_id = #{configId}
     </delete>
 
     <delete id="deleteConfigByIds" parameterType="Long">
