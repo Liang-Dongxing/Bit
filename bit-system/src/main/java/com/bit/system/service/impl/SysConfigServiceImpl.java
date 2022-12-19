@@ -123,6 +123,11 @@ public class SysConfigServiceImpl implements ISysConfigService {
      */
     @Override
     public int updateConfig(SysConfig config) {
+        SysConfig temp = configMapper.selectConfigById(config.getConfigId());
+        if (!StringUtils.equals(temp.getConfigKey(), config.getConfigKey())) {
+            redisCache.deleteObject(getCacheKey(temp.getConfigKey()));
+        }
+
         int row = configMapper.updateConfig(config);
         if (row > 0) {
             redisCache.setCacheObject(getCacheKey(config.getConfigKey()), config.getConfigValue());
