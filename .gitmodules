@@ -1,0 +1,4 @@
+[submodule "bit-ui"]
+	path = bit-ui
+	url = https://github.com/Liang-Dongxing/Bit-Vue3.git
+	branch = master
