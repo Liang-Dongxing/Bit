@@ -7,6 +7,7 @@ import com.bit.framework.interceptor.RepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.WebProperties;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.support.GenericConversionService;
@@ -29,22 +30,14 @@ import java.util.List;
  * @author bit
  */
 @Configuration
-public class ResourcesConfig implements WebMvcConfigurer {
+public class ResourcesConfig extends WebMvcAutoConfiguration implements WebMvcConfigurer {
     @Autowired
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
-
-    @Autowired
-    private WebProperties webProperties;
-    @Value("${server.servlet.encoding.charset}")
-    private Charset charset;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         /* 本地文件上传路径 */
         registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**").addResourceLocations("file:" + BitConfig.getProfile() + "/");
-
-        //配置静态资源处理
-        registry.addResourceHandler("/**").addResourceLocations(webProperties.getResources().getStaticLocations());
     }
 
     /**
@@ -53,20 +46,6 @@ public class ResourcesConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
-    }
-
-    @Override
-    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-        List<StringHttpMessageConverter> stringHttpMessageConverters = converters.stream()
-                .filter(converter -> converter.getClass().equals(StringHttpMessageConverter.class))
-                .map(converter -> (StringHttpMessageConverter) converter)
-                .toList();
-
-        if (stringHttpMessageConverters.isEmpty()) {
-            converters.add(responseBodyStringConverter());
-        } else {
-            stringHttpMessageConverters.forEach(converter -> converter.setDefaultCharset(charset));
-        }
     }
 
     /**
@@ -95,10 +74,5 @@ public class ResourcesConfig implements WebMvcConfigurer {
     public GenericConversionService getDefaultConversionService(@Autowired GenericConversionService genericConversionService) {
         genericConversionService.addConverter(new StringToStringGenericConverter());
         return genericConversionService;
-    }
-
-    @Bean
-    public HttpMessageConverter<String> responseBodyStringConverter() {
-        return new StringHttpMessageConverter(StandardCharsets.UTF_8);
     }
 }

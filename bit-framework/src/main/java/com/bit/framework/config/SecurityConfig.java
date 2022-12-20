@@ -96,7 +96,7 @@ public class SecurityConfig {
                 // 对于登录login 注册register 验证码captchaImage 允许匿名访问
                 .requestMatchers("/login", "/register", "/*/captchaImage").permitAll()
                 // 静态资源，可匿名访问
-                .requestMatchers(HttpMethod.GET, "/").permitAll()
+                .requestMatchers( "/").permitAll()
                 .requestMatchers(
                         new AntPathRequestMatcher("/**/*.html"),
                         new AntPathRequestMatcher("/**/*.css"),

@@ -39,6 +39,8 @@ server:
       max: 800
       # Tomcat启动初始化的线程数，默认值10
       min-spare: 100
+  compression:
+    enabled: true
 
 # 日志配置
 logging:
@@ -62,6 +64,8 @@ spring:
     basename: i18n/messages
   profiles:
     active: dev
+  main:
+    allow-bean-definition-overriding: true
   # 文件上传
   servlet:
     multipart:
@@ -69,6 +73,10 @@ spring:
       max-file-size: 10MB
       # 设置总上传的文件大小
       max-request-size: 20MB
+  mvc:
+    view:
+      prefix: /
+      suffix: .html
   # 服务模块
   devtools:
     restart:
