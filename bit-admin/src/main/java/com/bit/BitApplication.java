@@ -26,7 +26,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Slf4j
 public class BitApplication {
     public static void main(String[] args) {
-        // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(BitApplication.class, args);
         log.info("(♥◠‿◠)ﾉﾞ  Bit 启动成功   ლ(´ڡ`ლ)ﾞ");
     }
