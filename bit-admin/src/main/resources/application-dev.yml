@@ -1,0 +1,45 @@
+# 项目相关配置
+om:
+  # 实例演示开关
+  demoEnabled: true
+  # 文件路径 示例（ Windows配置D:/bit/uploadPath，Linux配置 /home/bit/uploadPath）
+  profile: D:/bit/uploadPath
+  # 获取ip地址开关
+  addressEnabled: false
+# 开发环境配置
+server:
+  port: 7080
+  servlet:
+    context-path: /
+
+# Spring配置
+spring:
+  config:
+    activate:
+      # 此时配置为开发环境
+      on-profile: dev
+  data:
+    redis:
+     host: dongxing.fun
+     port: 9547
+     database: 1
+     lettuce:
+       pool:
+         max-active: 2
+         max-idle: 2
+  datasource:
+    url: jdbc:mysql://dongxing.fun:9546/om7?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: root
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+
+# 日志配置
+logging:
+  level:
+    root: info
+    com.om: debug
+    org.springframework: debug

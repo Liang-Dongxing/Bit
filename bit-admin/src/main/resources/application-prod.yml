@@ -1,0 +1,108 @@
+# 项目相关配置
+bit:
+  # 实例演示开关
+  demoEnabled: true
+  # 文件路径 示例（ Windows配置D:/bit/uploadPath，Linux配置 /home/bit/uploadPath）
+  profile: /home/bit/uploadPath
+  # 获取ip地址开关
+  addressEnabled: false
+# 生产环境配置
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 7080
+  servlet:
+    # 应用的访问路径
+    context-path: /
+
+spring:
+  config:
+    activate:
+      # 此时配置为生产环境
+      on-profile: prod
+  data:
+    # redis 配置
+    redis:
+      # 地址
+      host:
+      # 端口，默认为6379
+      port:
+      # 数据库索引
+      database: 1
+      # 密码
+      password:
+      lettuce:
+        pool:
+          # 连接池的最大数据库连接数 大于cpu*2
+          max-active:
+          # 连接池中的最大空闲连接 cpu*2
+          max-idle:
+          # #连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-wait: 5s
+          # 连接池中的最小空闲连接
+          min-idle: 0
+          # 空闲对象清除器线程的运行间隔时间
+          time-between-eviction-runs: 1s
+  datasource:
+    # 主库数据源
+    master:
+      enabled: true
+      pool-name: HikariPool-master
+      url:
+      username:
+      password:
+    # 从库数据源
+    slave:
+      # 从数据源开关/默认关闭
+      enabled: false
+      pool-name: HikariPool-slave
+      url:
+      username:
+      password:
+    hikari:
+      # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒
+      connection-timeout: 3000
+      # 连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
+      maximum-pool-size: 10
+      # 一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟
+      idle-timeout: 600000
+      # 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL wait_timeout参数（show variables like '%timeout%';）
+      max-lifetime: 1800000
+      # 此属性控制 HikariCP 尝试在池中维护的最小空闲连接数。如果连接池中的连接数小于这个值，HikariCP 将会尝试添加新的连接来弥补它们。缺省值：与 maximumPoolSize 相同
+      minimum-idle: 10
+
+# 日志配置
+logging:
+  level:
+    root: info
+    com.om: info
+    org.springframework: info
+  file:
+    # 日志文件路径
+    name: logs/bit.log
+  logback:
+    rollingpolicy:
+      # 要保留的归档日志文件的最大数量（默认为 7）。
+      max-history: 90
+      # 用于创建日志存档的文件名模式。
+      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz
+      # 归档前日志文件的最大大小。默认值为10MB。
+      max-file-size: 5MB
+
+# 用户配置
+user:
+  password:
+    # 密码最大错误次数
+    maxRetryCount: 5
+    # 密码锁定时间（默认10分钟）
+    lockTime: 10
+
+# token配置
+token:
+  # 令牌有效期（默认30分钟）
+  expireTime: 120
+
+# springdoc Swagger配置
+springdoc:
+  api-docs:
+    # 是否开启swagger
+    enabled: false
