@@ -3,9 +3,12 @@ package com.bit;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.ansi.AnsiColor;
+import org.springframework.boot.ansi.AnsiOutput;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -26,7 +29,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Slf4j
 public class BitApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BitApplication.class, args);
-        log.info("(♥◠‿◠)ﾉﾞ  Bit 启动成功   ლ(´ڡ`ლ)ﾞ");
+        ConfigurableApplicationContext run = SpringApplication.run(BitApplication.class, args);
+        log.info("({}◠‿◠)ﾉﾞ  {} 启动成功   ლ(´ڡ`ლ)ﾞ", AnsiOutput.toString(AnsiColor.RED, "♥"), run.getEnvironment().getProperty("bit.name"));
     }
 }

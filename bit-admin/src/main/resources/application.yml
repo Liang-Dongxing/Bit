@@ -45,8 +45,15 @@ server:
 # 日志配置
 logging:
   level:
-    com.bit: debug
-    org.springframework: debug
+    root: info
+    com.om: info
+    org.springframework: info
+  file:
+    name: logs/bit.log
+  logback:
+    rollingpolicy:
+      max-history: 7
+      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz
 
 # 用户配置
 user:
@@ -128,6 +135,9 @@ spring:
       minimum-idle: 5
       idle-timeout: 600000
       max-lifetime: 1800000
+  output:
+    ansi:
+      enabled: always
 
 # token配置
 token:
