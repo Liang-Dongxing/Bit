@@ -20,17 +20,17 @@ spring:
       on-profile: dev
   data:
     redis:
-     host: dongxing.fun
-     port: 9547
+     host: 127.0.0.1
+     port: 6379
      database: 1
      lettuce:
        pool:
          max-active: 2
          max-idle: 2
   datasource:
-    url: jdbc:mysql://dongxing.fun:9546/om7?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-    username: root
-    password: root
+    url: jdbc:mysql://127.0.0.1:3306/bit?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username:
+    password:
   # 服务模块
   devtools:
     restart:

@@ -22,6 +22,7 @@ import java.util.Map;
  * @author bit
  */
 @Configuration
+@ConditionalOnProperty(value = "spring.datasource.master.enabled",havingValue = "true")
 public class DataSourceConfig {
     @Value("${spring.datasource.master.url}")
     private String masterUrl;

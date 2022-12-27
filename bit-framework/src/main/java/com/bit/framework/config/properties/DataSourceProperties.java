@@ -2,6 +2,7 @@ package com.bit.framework.config.properties;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @author bit
  */
 @Configuration
+@ConditionalOnProperty(value = "spring.datasource.master.enabled",havingValue = "true")
 public class DataSourceProperties {
     @Value("${spring.datasource.hikari.connection-timeout}")
     private int connectionTimeout;

@@ -64,7 +64,7 @@ spring:
       timeout: 10s
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
   output:
     # 配置 ANSI 输出。当设置为 true 时，输出 ANSI 控制字符以使输出彩色。当设置为 auto 时，将仅在输出到终端时输出 ANSI 控制字符。当设置为 false 时，不会输出 ANSI 控制字符。
     ansi:
