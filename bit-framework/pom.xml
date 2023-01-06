@@ -86,6 +86,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-common</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.bit</groupId>
             <artifactId>bit-common</artifactId>
         </dependency>

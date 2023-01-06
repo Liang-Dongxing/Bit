@@ -1,4 +1,4 @@
-package com.bit.web.core.config;
+package com.bit.framework.config;
 
 import com.bit.common.config.BitConfig;
 import io.swagger.v3.oas.annotations.Operation;
