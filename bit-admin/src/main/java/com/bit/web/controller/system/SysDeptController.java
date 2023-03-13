@@ -65,7 +65,7 @@ public class SysDeptController extends BaseController {
     @Log(title = "部门管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysDept dept) {
-        if (UserConstants.NOT_UNIQUE.equals(deptService.checkDeptNameUnique(dept))) {
+        if (!deptService.checkDeptNameUnique(dept)) {
             return error("新增部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         }
         dept.setCreateBy(getUsername());
@@ -81,7 +81,7 @@ public class SysDeptController extends BaseController {
     public AjaxResult edit(@Validated @RequestBody SysDept dept) {
         Long deptId = dept.getDeptId();
         deptService.checkDeptDataScope(deptId);
-        if (UserConstants.NOT_UNIQUE.equals(deptService.checkDeptNameUnique(dept))) {
+        if (!deptService.checkDeptNameUnique(dept)) {
             return error("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         } else if (dept.getParentId().equals(deptId)) {
             return error("修改部门'" + dept.getDeptName() + "'失败，上级部门不能是自己");

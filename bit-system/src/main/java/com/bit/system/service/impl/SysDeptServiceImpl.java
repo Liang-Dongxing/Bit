@@ -69,8 +69,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
     public List<SysDept> buildDeptTree(List<SysDept> depts) {
         List<SysDept> returnList = new ArrayList<SysDept>();
         List<Long> tempList = depts.stream().map(SysDept::getDeptId).collect(Collectors.toList());
-        for (SysDept dept : depts)
-        {
+        for (SysDept dept : depts) {
             // 如果是顶级节点, 遍历该父节点的所有子节点
             if (!tempList.contains(dept.getParentId())) {
                 recursionFn(depts, dept);
@@ -160,7 +159,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
      * @return 结果
      */
     @Override
-    public String checkDeptNameUnique(SysDept dept) {
+    public boolean checkDeptNameUnique(SysDept dept) {
         Long deptId = StringUtils.isNull(dept.getDeptId()) ? -1L : dept.getDeptId();
         SysDept info = deptMapper.checkDeptNameUnique(dept.getDeptName(), dept.getParentId());
         if (StringUtils.isNotNull(info) && info.getDeptId().longValue() != deptId.longValue()) {

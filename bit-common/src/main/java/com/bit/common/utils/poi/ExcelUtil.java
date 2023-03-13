@@ -1288,7 +1288,7 @@ public class ExcelUtil<T> {
                 if (shape instanceof HSSFPicture pic) {
                     int pictureIndex = pic.getPictureIndex() - 1;
                     HSSFPictureData picData = pictures.get(pictureIndex);
-                    String picIndex = anchor.getRow1() + "_" + String.valueOf(anchor.getCol1());
+                    String picIndex = anchor.getRow1() + "_" + anchor.getCol1();
                     sheetIndexPicMap.put(picIndex, picData);
                 }
             }

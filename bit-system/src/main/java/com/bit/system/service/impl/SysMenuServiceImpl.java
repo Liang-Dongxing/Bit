@@ -151,7 +151,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
             router.setQuery(menu.getQuery());
             router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), StringUtils.equals("1", menu.getIsCache()), menu.getPath()));
             List<SysMenu> cMenus = menu.getChildren();
-            if (!cMenus.isEmpty() && cMenus.size() > 0 && UserConstants.TYPE_DIR.equals(menu.getMenuType())) {
+            if (StringUtils.isNotEmpty(cMenus) && UserConstants.TYPE_DIR.equals(menu.getMenuType())) {
                 router.setAlwaysShow(true);
                 router.setRedirect("noRedirect");
                 router.setChildren(buildMenus(cMenus));
@@ -194,8 +194,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     public List<SysMenu> buildMenuTree(List<SysMenu> menus) {
         List<SysMenu> returnList = new ArrayList<SysMenu>();
         List<Long> tempList = menus.stream().map(SysMenu::getMenuId).collect(Collectors.toList());
-        for (Iterator<SysMenu> iterator = menus.iterator(); iterator.hasNext();)
-        {
+        for (Iterator<SysMenu> iterator = menus.iterator(); iterator.hasNext(); ) {
             SysMenu menu = (SysMenu) iterator.next();
             // 如果是顶级节点, 遍历该父节点的所有子节点
             if (!tempList.contains(menu.getParentId())) {
@@ -296,7 +295,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return 结果
      */
     @Override
-    public String checkMenuNameUnique(SysMenu menu) {
+    public boolean checkMenuNameUnique(SysMenu menu) {
         Long menuId = StringUtils.isNull(menu.getMenuId()) ? -1L : menu.getMenuId();
         SysMenu info = menuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
         if (StringUtils.isNotNull(info) && info.getMenuId().longValue() != menuId.longValue()) {
@@ -415,7 +414,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
     /**
      * 递归列表
-     * 
+     *
      * @param list
      * @param t
      */
@@ -454,7 +453,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
     /**
      * 内链域名特殊字符替换
-     * 
+     *
      * @return
      */
     public String innerLinkReplaceEach(String path) {

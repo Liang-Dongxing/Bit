@@ -33,10 +33,9 @@
         <mybatis-plus-spring-boot.version>3.5.2</mybatis-plus-spring-boot.version>
         <pagehelper.boot.version>1.4.6</pagehelper.boot.version>
         <pagehelper.version>5.3.2</pagehelper.version>
-        <fastjson.version>2.0.20</fastjson.version>
+        <fastjson.version>2.0.23</fastjson.version>
         <oshi.version>6.4.0</oshi.version>
         <commons.io.version>2.11.0</commons.io.version>
-        <commons.fileupload.version>1.4</commons.fileupload.version>
         <commons.collections.version>4.4</commons.collections.version>
         <poi.version>5.2.2</poi.version>
         <velocity.version>2.3</velocity.version>
@@ -120,13 +119,6 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons.io.version}</version>
-            </dependency>
-
-            <!-- 文件上传工具类 -->
-            <dependency>
-                <groupId>commons-fileupload</groupId>
-                <artifactId>commons-fileupload</artifactId>
-                <version>${commons.fileupload.version}</version>
             </dependency>
 
             <!-- excel工具 -->
