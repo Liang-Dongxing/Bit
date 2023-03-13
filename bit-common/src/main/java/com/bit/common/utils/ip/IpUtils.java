@@ -1,13 +1,11 @@
 package com.bit.common.utils.ip;
 
+import com.bit.common.utils.ServletUtils;
 import com.bit.common.utils.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import javax.servlet.http.HttpServletRequest;
-import com.ruoyi.common.utils.ServletUtils;
-import com.ruoyi.common.utils.StringUtils;
 
 /**
  * 获取IP方法

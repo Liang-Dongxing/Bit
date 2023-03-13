@@ -12,7 +12,6 @@ import com.bit.system.domain.SysOperLog;
 import com.bit.system.service.ISysLogininforService;
 import com.bit.system.service.ISysOperLogService;
 import eu.bitwalker.useragentutils.UserAgent;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.TimerTask;
@@ -24,20 +23,6 @@ import java.util.TimerTask;
  */
 @Slf4j
 public class AsyncFactory {
-
-    /**
-     * 记录登录信息
-     *
-     * @param username 用户名
-     * @param status   状态
-     * @param message  消息
-     * @param args     列表
-     * @return 任务task
-     */
-    public static TimerTask recordLogininfor(final String username, final String status, final String message, final Object... args) {
-        return recordLogininfor(ServletUtils.getRequest(), username, status, message, args);
-    }
-
     /**
      * 记录登录信息
      *

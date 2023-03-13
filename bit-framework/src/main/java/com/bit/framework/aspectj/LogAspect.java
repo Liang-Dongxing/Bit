@@ -16,10 +16,13 @@ import com.bit.system.domain.SysOperLog;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.core.NamedThreadLocal;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
@@ -209,6 +212,7 @@ public class LogAspect {
                 return entry.getValue() instanceof MultipartFile;
             }
         }
-        return o instanceof MultipartFile || o instanceof HttpServletRequest || o instanceof HttpServletResponse || o instanceof BindingResult;
+        return o instanceof MultipartFile || o instanceof HttpServletRequest || o instanceof HttpServletResponse
+                || o instanceof BindingResult;
     }
 }

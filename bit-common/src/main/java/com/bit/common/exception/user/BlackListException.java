@@ -1,4 +1,4 @@
-package com.ruoyi.common.exception.user;
+package com.bit.common.exception.user;
 
 /**
  * 黑名单IP异常类

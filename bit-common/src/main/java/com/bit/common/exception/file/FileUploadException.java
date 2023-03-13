@@ -1,4 +1,4 @@
-package com.ruoyi.common.exception.file;
+package com.bit.common.exception.file;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;

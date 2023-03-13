@@ -1,12 +1,6 @@
 package com.bit.framework.config.properties;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.regex.Pattern;
-
+import com.bit.common.annotation.Anonymous;
 import org.apache.commons.lang3.RegExUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
@@ -21,6 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
