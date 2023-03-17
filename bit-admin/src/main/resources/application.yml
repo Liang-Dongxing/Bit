@@ -70,6 +70,26 @@ spring:
     ansi:
       enabled: always
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info # 暴露健康检查和信息接口
+  info:
+    env:
+      enabled: true # 是否启用环境信息
+    java:
+      enabled: true # 是否启用Java信息
+    os:
+      enabled: true # 是否启用操作系统信息
+
+info:
+  om:
+    # 名称
+    name: ${bit.name}
+    # 版本
+    version: ${bit.version}
+
 # 用户配置
 user:
   password:
@@ -107,6 +127,7 @@ springdoc:
   api-docs:
     # 是否开启swagger
     enabled: true
+    path: /api-docs
   swagger-ui:
     # 接口排序
     operations-sorter: alpha

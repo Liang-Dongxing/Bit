@@ -94,7 +94,7 @@ public class SecurityConfig {
                 // 过滤请求
                 .authorizeHttpRequests()
                 // 对于登录login 注册register 验证码captchaImage 允许匿名访问
-                .requestMatchers("/login", "/register", "/*/captchaImage").permitAll()
+                .requestMatchers("/login", "/register", "/*/captchaImage", "/actuator*/**").permitAll()
                 // 静态资源，可匿名访问
                 .requestMatchers( "/").permitAll()
                 .requestMatchers(
@@ -104,7 +104,7 @@ public class SecurityConfig {
                         new AntPathRequestMatcher("/profile/**")
                 ).permitAll()
                 // swagger 请求路径，可匿名访问
-                .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**"), new AntPathRequestMatcher("/*/api-docs/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**"), new AntPathRequestMatcher("/api-docs/**")).permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated().and().headers().frameOptions().disable();
         // 添加Logout filter
